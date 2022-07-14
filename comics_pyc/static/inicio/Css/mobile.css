@@ -1,0 +1,131 @@
+:root{
+    --text_color:white;
+    --backgroud_header:black;
+    --orange_icons:#DF6300;
+    --background_body: black;
+    --background_submenu:#1F1F1F;
+}
+html {
+    margin: 0;
+    padding: 0;
+    font-size: 62.5%;
+    box-sizing: border-box;
+}
+html body{
+    background-color: var(--background_body);
+}
+
+header{
+    background-color: var(--backgroud_header);
+    color: var(--text_color);
+}
+html body content{
+    color:var(--text_color);
+}
+content h1,h2{
+    padding: 2rem;
+}
+div.menu-desktop{
+    display: none;
+}
+.cart{
+    font-size: 2rem;
+    color: var(--orange_icons)  
+}
+.data a i{
+    font-size: 3rem;
+    color: var(--orange_icons)
+}
+.tittle {
+    border-bottom:0.1rem solid var(--text_color);
+    width:100%;
+    padding: 0.5rem;
+}
+.tittle h1{
+    font-size: 1.3rem;
+}
+.whatsapp{
+    color:#00BB2D
+}
+button.close-menu{
+    color:var(--orange_icons);
+    font-size:3rem;
+    font-weight: bold;
+}
+div.mov{
+    width: 100vw;
+    background-color: var(--backgroud_header);
+    color:white;
+}
+div.mov a{
+    text-decoration: none;
+    color: var(--text_color);
+    font-size: 1.5rem;
+    margin: 1rem;
+}
+ul.cat{
+    background-color: var(--background_submenu);
+    width: 90vw;
+}
+ul.cat li a{
+    color: var(--orange_icons);
+}
+button.menu{
+    color:var(--orange_icons);
+    font-size: 3rem;
+}
+button.menu:focus{
+    border: 0.1rem solid var(--orange_icons);
+    color: var(--orange_icons);
+}
+button.menu::before{
+    border: 0.1rem solid var(--orange_icons);
+    color:var(--orange_icons);
+}
+.desktop{
+    display: none;
+}
+.container-carousel{
+    margin: 1rem;
+}
+.container-carousel img{
+    width: calc(100vw - 2rem);
+    max-height: 50vw;
+}
+.products h2{
+    margin: 1rem;
+    color: var(--text_color);
+}
+.product{
+    margin: 1rem;
+    width: calc(50vw - 2rem);
+}
+.categories{
+    margin: 1rem;
+    width: calc(100vw - 2rem);
+}
+.details{
+    background-color: var(--backgroud_header);
+    width:calc(100vw - 6rem);
+    margin: 0 3rem;
+}
+.mobile h1{
+    margin-left: 2rem;
+}
+.main_background{
+    background-color: var(--background_body);
+}
+.detail-box{
+    margin-top: 1rem;
+}
+.detail-box h4{
+    font-size: 3.5rem;
+    font-weight: bold;
+}
+.detail-box p{
+    font-size: 1.5rem;
+}
+.detail-box button{
+    width: calc(100vw - 6rem);
+    font-size: 3rem;
+}

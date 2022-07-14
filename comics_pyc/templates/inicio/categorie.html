@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+<h1>Categoria Seleccionada</h1>
+<div class="banner_categorie container-carousel">
+    <img src="{% static 'inicio/Images/banner.png' %}" alt="Banner de la Categoria">
+</div>
+
+<h2>Algun Subtitulo</h2>
+<div class="d-flex align-content-center flex-wrap">
+    {% for product in products %}
+    {% include 'product_card.html' %}
+    {% endfor %} 
+</div>
+
+{% endblock body %}

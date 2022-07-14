@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+<!--Carrousel-->
+<div class="container-carousel d-flex justify-content-around">
+  <div class="desktop">
+    <img src="{% static 'inicio/Images/promo.png' %}" class="" alt="...">
+    <img src="{% static 'inicio/Images/promo.png' %}" class="" alt="...">
+  </div>
+  <div id="carousel carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="{% static 'inicio/Images/slider.png' %}" class="d-block" alt="imagen1">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'inicio/Images/slider.png' %}" class="d-block" alt="imagen2">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'inicio/Images/slider.png' %}" class="d-block" alt="imagen3">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</div>
+<!--Product-->
+<div class="products">
+<h2>Cateogrias Populares</h2>
+<div class="cat-pop d-flex align-content-center">
+    <div class="cat-pop-container d-flex align-content-center flex-wrap">
+    {% for categorie in categories %}
+        <div class="categories">
+            <div class="card">
+                <img src="{% static 'inicio/Images/promo.png' %}" class="card-img-top" alt="...">
+                <div class="card-body">
+                <h5 class="card-title">{{categorie}}</h5>
+                <p class="card-text">Aqui va el texto del {{categorie}}</p>
+                <a href="{% url 'categories' %}" class="btn btn-primary">Ver Más..</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>  
+</div>
+<h2>Más Vendidos</h2>
+<div class="d-flex align-content-center">
+    <div class="d-flex align-content-center flex-wrap">
+    {% for product in products %}
+      {% include 'product_card.html' %}
+    {% endfor %}
+    </div>  
+</div>
+</div>
+  {% endblock body %}

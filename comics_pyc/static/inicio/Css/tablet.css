@@ -1,0 +1,9 @@
+.product{
+    margin: 1rem;
+    width: 30vw;
+    justify-content: space-around;
+}
+.categories{
+    margin: 1rem;
+    width: calc(50vw - 2rem);
+}
