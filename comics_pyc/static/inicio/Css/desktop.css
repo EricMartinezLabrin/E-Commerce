@@ -24,6 +24,9 @@
 .product{
     width: calc(25vw - 2.4rem);
 }
+.mobile{
+    display: none;
+}
 div.menu-mobile{
     display: none;
 }
@@ -46,12 +49,32 @@ div.menu-desktop ul.cat{
     margin: 1rem;
     width: calc(50vw - 3rem);
 }
-div.cart{
-    /* display: flex; */
-}
+
 div.cart table{
     width: 80vw;
 }
 div.cart .w-98{
     width: 20vw;
+}
+.details{
+    margin: 3rem;
+}
+.details .main_background{
+    padding: 1rem;
+    display: flex;
+}
+div.description{
+    width: 40%;
+}
+div.buttons{
+    width: 40%;
+}
+div.buttons button{
+    width: 100%;
+}
+.desktop{
+    display: block;
+}
+.small{
+    width: 50%;
 }

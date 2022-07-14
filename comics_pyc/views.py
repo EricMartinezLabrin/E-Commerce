@@ -38,3 +38,6 @@ class CartView(TemplateView):
 
 class CheckoutView(TemplateView):
     template_name = 'inicio/checkout.html'
+
+class LoginView(TemplateView):
+    template_name = 'inicio/login.html'

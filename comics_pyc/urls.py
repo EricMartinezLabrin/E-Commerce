@@ -24,5 +24,6 @@ urlpatterns = [
     path('details', views.DetailView.as_view(), name='details'),
     path('cart', views.CartView.as_view(), name='cart'),
     path('checkout', views.CheckoutView.as_view(), name='checkout'),
+    path('login', views.LoginView.as_view(), name='login'),
     path('adm/', include('adm.urls'))
 ]

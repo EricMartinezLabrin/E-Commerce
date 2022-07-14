@@ -14,34 +14,36 @@
       </div>
       <div class="col-md-8 main_background">
         <div class="detail-box card-body">
-          <h5 class="card-title desktop">Nombre del Producto</h5>
+          <div class="description">          
+          <h3 class="card-title desktop">Nombre del Producto</h3>
           <h4 class="card-text">$1.000</h4>
           <p>Descripción del artículo</p>
-          <a href="{% url 'cart' %}"><p class="card-text"><button class="btn btn-primary">Comprar</button></p></a>
-          <span>por qué comprar 1</span><br>
-          <span>por qué comprar 2</span><br>
-          <span>por qué comprar 3</span>
+        </div>
+
+          <div class="buttons">          
+            <a href="{% url 'cart' %}"><p class="card-text"><button class="btn btn-primary">Comprar</button></p></a>
+            <span>por qué comprar 1</span><br>
+            <span>por qué comprar 2</span><br>
+            <span>por qué comprar 3</span>
+          </div>
         </div>
       </div>
     </div>
   </div>
   </div>
 
+  <hr class="my-4">
 
-
-
-  <div class="mobile">
     <h2> Tambien te puede interesar:</h2>
-  </div>
   <div class="details">
     <div class="mb-3">
       <div class="row g-0">
         <div class="col-md-4">
-          <img src="{% static 'inicio/Images/offer.png' %}" class="img-fluid rounded-start" alt="Producto">
+          <img class="small" src="{% static 'inicio/Images/offer.png' %}" class="img-fluid rounded-start" alt="Producto">
         </div>
         <div class="col-md-8 main_background">
           <div class="detail-box card-body">
-            <h5 class="card-title desktop">Nombre del Producto</h5>
+            <h3 class="card-title desktop">Nombre del Producto</h3>
             <h4 class="card-text">$1.000</h4>
             <p>Descripción del artículo</p>
             <a href="#">Más Detalles...</a>
