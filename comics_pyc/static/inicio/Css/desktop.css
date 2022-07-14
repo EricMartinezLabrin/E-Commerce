@@ -46,3 +46,12 @@ div.menu-desktop ul.cat{
     margin: 1rem;
     width: calc(50vw - 3rem);
 }
+div.cart{
+    /* display: flex; */
+}
+div.cart table{
+    width: 80vw;
+}
+div.cart .w-98{
+    width: 20vw;
+}

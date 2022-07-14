@@ -32,3 +32,9 @@ class CategoriesView(TemplateView):
 
 class DetailView(TemplateView):
     template_name = 'inicio/details.html'
+
+class CartView(TemplateView):
+    template_name = 'inicio/cart.html'
+
+class CheckoutView(TemplateView):
+    template_name = 'inicio/checkout.html'

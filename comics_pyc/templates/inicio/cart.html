@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+<h1>Producto Agregado Correctamente</h1>
+
+<div class="cart">
+<table class="table table-dark table-hover">
+    <tbody>
+      <tr>
+        <th><p>1</p></th>
+        <td><img src="{% static 'inicio/Images/promo.png' %}" alt="promo"></td>
+        <td> 
+            <h5>Nombre del Producto</h5>
+            <p>Descripción del producto</p> 
+        </td>
+        <td><button type="button" class="btn btn-danger"><i class="bi bi-trash3-fill"></i></button></td>
+      </tr>
+    </tbody>
+  </table>
+  <a href="{% url 'checkout' %}"><button class="strong w-98">Pagar</button></a>
+  <button class="light w-98">Seguir Comprando</button>
+</div>
+{% endblock body %}

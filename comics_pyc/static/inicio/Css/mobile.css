@@ -109,8 +109,8 @@ button.menu::before{
     width:calc(100vw - 6rem);
     margin: 0 3rem;
 }
-.mobile h1{
-    margin-left: 2rem;
+.mobile h1,.mobile h2{
+    margin-left: 1rem;
 }
 .main_background{
     background-color: var(--background_body);
@@ -128,4 +128,33 @@ button.menu::before{
 .detail-box button{
     width: calc(100vw - 6rem);
     font-size: 3rem;
+}
+div.cart{
+    text-align: center;
+}
+div.cart p{
+    font-size: 1rem;
+    font-weight: lighter;
+}
+div.cart img{
+    width: 8rem;
+}
+
+.w-98{
+    width: calc(98vw - 2rem);
+    margin: 0.5rem 1rem;
+}
+.strong{
+    border-radius: 0.5rem;
+    border-color: var(--orange_icons);
+    background-color: var(--orange_icons);
+    font-weight: 600;
+    color: var(--text_color);
+}
+.light{
+    border-radius: 0.5rem;
+    border-color: var(--orange_icons);
+    background-color: var(--background_body);
+    font-weight: 200;
+    color: var(--orange_icons);
 }
