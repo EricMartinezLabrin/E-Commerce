@@ -1,5 +1,4 @@
 #Django
-from pipes import Template
 from django.views.generic.base import TemplateView
 from django.shortcuts import render
 from .functions import Show

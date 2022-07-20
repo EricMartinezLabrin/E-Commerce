@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-import os.path
+
+from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-@4m^@25gg)$(yy-b*^@-j=p*jm&n7s3q96)%vtn#6r=)7#06*v'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["descargas.tk"]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -38,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'comics_pyc'
+    'comics_pyc',
+    'adm'
 ]
 
 MIDDLEWARE = [
@@ -118,10 +120,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = ''
-STATICFILES_DIRS = ( os.path.join('static'), )
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_REDIRECT_URL = reverse_lazy("adm:dashboard")
+
+LOGOUT_REDIRECT_URL = reverse_lazy("adm:index")
+
+LOGIN_URL = reverse_lazy("adm:index")
+
+# DATETIME_FORMAT = "d - M - y"
+
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'

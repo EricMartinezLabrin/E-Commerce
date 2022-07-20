@@ -4,7 +4,8 @@ from django.contrib.auth.decorators import login_required
 
 from . import views
 
+app_name = "adm"
 urlpatterns = [
-    #extension: /accounts/
-    path("", views.test, name ="index"),
+    #extension: /adm/
+    path("", views.IndexView.as_view(), name ="index"),
 ]

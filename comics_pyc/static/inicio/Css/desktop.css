@@ -1,3 +1,6 @@
+body{
+    background-color: red;
+}
 .data a i{
     margin-right: 2rem;
 }
@@ -10,9 +13,16 @@
     display: block;
     margin: 1rem;
 }
+.logo a{
+    text-decoration: none!important;
+    color: var(--text_color)!important;
+}
 .promo-desktop img{
     display: block;
     width: calc(30vw - 2rem);
+}
+.desktop{
+    display: block;
 }
 .carousel{
     width: calc(70vw - 3rem);
@@ -31,16 +41,19 @@ div.menu-mobile{
     display: none;
 }
 div.menu-desktop{
+    margin-top: 2rem;
     display: flex;
     justify-content: space-evenly;
     align-self: center;
     width: 70vh;
 }
 div.menu-desktop a{
-    color:
-    var(--text_color);
+    color:var(--text_color);
     text-decoration: none;
     font-size: 2rem;
+}
+div.menu-desktop a:hover{
+    color: var(--orange_icons);
 }
 div.menu-desktop ul.cat{
     width: 30vw;
@@ -72,9 +85,11 @@ div.buttons{
 div.buttons button{
     width: 100%;
 }
-.desktop{
-    display: block;
-}
+
 .small{
     width: 50%;
+}
+div.sub-categorie a{
+    color: var(--font-grey);
+    font-size: 1.2rem;
 }

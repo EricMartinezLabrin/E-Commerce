@@ -1,9 +1,9 @@
-{% extends 'base.html' %}
+{% extends 'inicio/base.html' %}
 {% load static %}
 {% block body %}
 <!--Carrousel-->
 <div class="container-carousel d-flex justify-content-around">
-  <div class="desktop">
+  <div class="desktop promo-desktop">
     <img src="{% static 'inicio/Images/promo.png' %}" class="" alt="...">
     <img src="{% static 'inicio/Images/promo.png' %}" class="" alt="...">
   </div>
@@ -57,7 +57,7 @@
 <div class="d-flex align-content-center">
     <div class="d-flex align-content-center flex-wrap">
     {% for product in products %}
-      {% include 'product_card.html' %}
+      {% include 'inicio/product_card.html' %}
     {% endfor %}
     </div>  
 </div>
