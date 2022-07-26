@@ -1,7 +1,7 @@
 {% load static %}
 
 <div class="d-flex flex-nowrap">
-  <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 200px;">
+  <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 160px;">
     <a href="{% url 'adm:index' %}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
       <img src="{% static 'inicio/Images/logo.png' %}" alt="Ikigai Manga" width="100">
     </a>
@@ -35,6 +35,12 @@
         <a href="#" class="nav-link text-white">
             <i class="bi bi-person-circle"></i>
           Clientes
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'adm:ads' %}" class="nav-link text-white">
+            <i class="bi bi-megaphone"></i>
+          Ads
         </a>
       </li>
     </ul>

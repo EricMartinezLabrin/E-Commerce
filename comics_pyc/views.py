@@ -2,6 +2,7 @@
 from django.views.generic.base import TemplateView
 from django.shortcuts import render
 from .functions import Show
+from adm.models import Banner
 
 class IndexView(TemplateView):
     template_name = 'inicio/index.html'
@@ -15,8 +16,13 @@ class IndexView(TemplateView):
             products.append(f"Producto {counter}")
         return products
 
+    def show_banner(self):
+        banner = Banner.objects.all()
+        return banner
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['banner'] = IndexView.show_banner(self)
         context['categories'] = Show.show_categories()
         context['products'] = IndexView.show_products(self)
         return context

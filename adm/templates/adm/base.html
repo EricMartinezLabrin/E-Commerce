@@ -13,12 +13,11 @@
     <title>{% block title %}{% endblock title %}</title>
 
 </head>
-<body>
-    
-    <main class="d-flex flex-nowrap">
-        <nav>
-            {% include 'adm/menu.html' %}
-        </nav>
+<body class="d-flex flex-nowrap">
+    <nav>
+        {% include 'adm/menu.html' %}
+    </nav>
+    <main>     
         {% block body %}{% endblock body %}
         <div class="modal fade" id="edicion" role="dialog"></div>
     </main>
