@@ -9,3 +9,11 @@ class Banner(models.Model):
 
     def __str__(self):
         return self.name
+
+class Category(models.Model):
+    name = models.CharField(max_length=30,unique=True)
+    banner = models.FileField(upload_to="categories/")
+    status = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name

@@ -2,36 +2,38 @@
 {% load static %}
 {% block body %}
 <!--Carrousel-->
+<!--Promo-->
 <div class="container-carousel d-flex justify-content-around">
   <div class="desktop promo-desktop">
     <img src="{% static 'inicio/Images/promo.png' %}" class="" alt="...">
     <img src="{% static 'inicio/Images/promo.png' %}" class="" alt="...">
   </div>
-  {% for slider in banner %}
-  <div id="carousel carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+
+  <!--slider-->
+  <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
     <div class="carousel-indicators">
       <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
       <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
       <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
     </div>
     <div class="carousel-inner">
-      
+      {% for slider in banner %}
       <div class="carousel-item active">
-        <img src="/media/{{slider.uploadedFile}}" class="d-block" alt="{{slider.name}}">
+        <img src="/media/{{slider.uploadedFile}}" class="d-block w-100" alt="{{slider.name}}">
       </div>
-      
+      {% endfor %}
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
+      <span class="visually-hidden">Anterior</span>
     </button>
     <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
+      <span class="visually-hidden">Siguiente</span>
     </button>
   </div>
-   
-</div>
+</div> 
+
 <!--Product-->
 <div class="products">
 <h2>Cateogrias Populares</h2>
@@ -48,7 +50,7 @@
                 </div>
             </div>
         </div>
-        {% endfor %}
+    {% endfor %}
     </div>  
 </div>
 <h2>Más Vendidos</h2>
