@@ -1,5 +1,5 @@
 from django import forms
-from .models import Banner,Category
+from .models import Banner,Category,SubCategory
 
 class AddNewBanner(forms.ModelForm):
 
@@ -27,5 +27,21 @@ class AddCategory(forms.ModelForm):
         }
         widgets = {
             'name': forms.TextInput(attrs={'class':'form-control'}),
+            'banner': forms.FileInput(attrs={'class':'form-control', 'acept':'image/png'})
+        }
+
+class AddSubCategory(forms.ModelForm):
+
+    class Meta:
+        model = SubCategory
+        fields = ['name','subcategory','banner']
+        labels = {
+            'name': 'Ingresa un Nombre',
+            'subcategory': 'Selecciona Categoria Principal',
+            'banner': 'Selecciona una imagen para el banner'
+        }
+        widgets = {
+            'name': forms.TextInput(attrs={'class':'form-control'}),
+            'subcategory': forms.Select(attrs={'class':'form-control'}),
             'banner': forms.FileInput(attrs={'class':'form-control', 'acept':'image/png'})
         }

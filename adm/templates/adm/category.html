@@ -4,8 +4,8 @@
 {% block body %}
 <h1>Categorias</h1>
 <h2>Categorias Principales</h2>
-<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">Nueva Categoria</button>
-<div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
+<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#category" aria-controls="staticBackdrop">Nueva Categoria</button>
+<div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="category" aria-labelledby="staticBackdropLabel">
     <div class="offcanvas-header">
       <h5 class="offcanvas-title" id="staticBackdropLabel">Nueva Categoria</h5>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -33,9 +33,9 @@
    <tbody>
     {% for category in categories %}
     <tr>
-        <td>{{category}}</td>
+        <td>{{category.name}}</td>
         <td>
-            <a href="#" onclick="abrir_modal_edicion('{% url 'adm:modal_preview_category' %}')">
+            <a href="#" onclick="abrir_modal_edicion('{% url 'adm:modal_preview_category' category.pk %}')">
                 <img src="/media/{{category.banner}}" alt="{{category.name}}" width="50">
             </a>
         </td>
@@ -46,10 +46,56 @@
   </table>
 {% else %}
 <div class="alert alert-danger mt-3" role="alert">
-    No hay categoriasdisponibles, puedes crear una haciendo click <a href="#" class="alert-link">Aquí</a>
+    No hay Categorias disponibles, puedes crear una haciendo click <a data-bs-toggle="offcanvas" href="#category" role="button" aria-controls="offcanvasExample" class="alert-link">Aquí</a>
   </div>
 {% endif %}
 
 
-<h2>Subcategorias</h2>
+<h2>Sub Categorias</h2>
+<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#subcategory" aria-controls="staticBackdrop">Nueva Sub Categoria</button>
+<div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="subcategory" aria-labelledby="staticBackdropLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="staticBackdropLabel">Nueva Sub Categoria</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div>
+        <form action="{% url 'adm:subcategory_create' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form_subcategory.as_p}}
+            <p>Se recomienda en formato PNG medidas 400 x 240</p>
+            <input type="submit" class="btn btn-primary" value="Crear">
+        </form>
+
+      </div>
+    </div>
+  </div>
+{% if subcategories %}
+
+<table class="table table-striped table-hover">
+   <thead>
+    <th>Categoria</th>
+    <th>Banner</th>
+    <th>#</th>
+   </thead>
+   <tbody>
+    {% for category in subcategories %}
+    <tr>
+        <td>{{category.subcategory}} / {{category.name}}</td>
+        <td>
+            <a href="#" onclick="abrir_modal_edicion('{% url 'adm:modal_preview_category' category.pk %}')">
+                <img src="/media/{{category.banner}}" alt="{{category.name}}" width="50">
+            </a>
+        </td>
+        <td><i class="bi bi-pencil"></i></td>
+    </tr>
+    {% endfor %}
+   </tbody>
+  </table>
+{% else %}
+<div class="alert alert-danger mt-3" role="alert">
+    No hay Sub Categorias disponibles, puedes crear una haciendo click <a data-bs-toggle="offcanvas" href="#subcategory" role="button" aria-controls="offcanvasExample" class="alert-link">Aquí</a>
+  </div>
+{% endif %}
+
 {% endblock body %}
