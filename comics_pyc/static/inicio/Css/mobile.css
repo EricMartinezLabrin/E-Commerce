@@ -159,3 +159,6 @@ div.cart img{
     font-weight: 200;
     color: var(--orange_icons);
 }
+div.bg-orange{
+    background-color: var(--orange_icons);
+}

@@ -41,12 +41,12 @@
     <div class="cat-pop-container d-flex align-content-center flex-wrap">
     {% for categorie in categories %}
         <div class="categories">
-            <div class="card">
-                <img src="{% static 'inicio/Images/promo.png' %}" class="card-img-top" alt="...">
+            <div class="card bg-orange">
+                <img src="/media/{{categorie.banner}}" class="card-img-top" alt="{{categorie.name}}">
                 <div class="card-body">
-                <h5 class="card-title">{{categorie}}</h5>
-                <p class="card-text">Aqui va el texto del {{categorie}}</p>
-                <a href="{% url 'categories' %}" class="btn btn-primary">Ver Más..</a>
+                <h5 class="card-title">{{categorie.name}}</h5>
+                <p class="card-text" >Aqui va el texto del {{categorie.description}}</p>
+                <a href="{% url 'categories' categorie.pk %}" class="btn btn-primary">Ver Más..</a>
                 </div>
             </div>
         </div>

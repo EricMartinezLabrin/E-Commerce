@@ -1,24 +1,24 @@
 <div class="mt-2">
     <a href="{% url 'home' %}">Inicio</a>              
 </div>
-{% comment %} <div class="dropdown mt-2">
+<div class="dropdown mt-2">
     <a class="dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown">
         Categorias
     </a>
     <ul class="dropdown-menu cat" aria-labelledby="dropdownMenuButton">
         {% for categorie in categories %}
-        <li><a class="dropdown-item" href="{% url 'categories' %}">{{categorie}}</a></li>
+        <li><a class="dropdown-item" href="{% url 'categories' categorie.pk %}">{{categorie}}</a></li>
         {% endfor %}
     </ul>
-</div> {% endcomment %}
+</div>
 <div class="mt-2">
     <a href="#">Carrito</a>
 </div>
 <div class="mt-2">
     <a href="#">Contacto</a>
 </div>
-<div class="menu-desktop mt-2 sub-categorie">
+{% comment %} <div class="menu-desktop mt-2 sub-categorie">
     {% for categorie in categories %}
-    <a href="{% url 'categories' %}">{{categorie}}</a>
+    <a href="{% url 'categories' categorie.pk%}">{{categorie.name}}</a>
     {% endfor %}
-</div>
+</div> {% endcomment %}

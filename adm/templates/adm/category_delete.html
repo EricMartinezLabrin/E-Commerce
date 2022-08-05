@@ -1,0 +1,13 @@
+{% extends 'adm/base.html' %}
+{% block body %}
+<form method="post">
+    <h1>Eliminar {{object.name}}</h1>
+    {% csrf_token %}
+    <br>
+    <p>Estás seguro que deseas eliminar "{{ object.name }}"?</p>
+    {{ form }}
+    <br>
+    <input type="submit" class="btn btn-primary" value="Confirmar">
+    <a href="{% url 'adm:category' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock body %}

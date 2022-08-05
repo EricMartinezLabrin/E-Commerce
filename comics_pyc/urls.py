@@ -25,8 +25,8 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.IndexView.as_view(), name='home'),
-    path('categories', views.CategoriesView.as_view(), name='categories'),
-    path('details', views.DetailView.as_view(), name='details'),
+    path('categories/<int:pk>', views.CategoriesView.as_view(), name='categories'),
+    path('details/<int:pk>', views.DetailView.as_view(), name='details'),
     path('cart', views.CartView.as_view(), name='cart'),
     path('checkout', views.CheckoutView.as_view(), name='checkout'),
     path('login', views.LoginView.as_view(), name='login'),

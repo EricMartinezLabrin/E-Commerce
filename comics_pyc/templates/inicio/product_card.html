@@ -1,11 +1,11 @@
 <div class="product">
-    <div class="card">
-        <a href="{% url 'details' %}">
-            <img src="../static/inicio/Images/offer.png" class="card-img-top" alt="...">
+    <div class="card bg-orange">
+        <a href="{% url 'details' product.pk%}">
+            <img src="/media/{{product.image}}" class="card-img-top" alt="...">
         </a>
         <div class="card-body">
-        <h5 class="card-title">{{product}}</h5>
-        <p class="card-text">Aqui va el texto del {{product}}</p>
+        <h5 class="card-title">{{product.name}}</h5>
+        <p class="card-text">{{product.description}}</p>
         <a href="#" class="btn btn-primary">Agregar al Carrito</a>
         </div>
     </div>

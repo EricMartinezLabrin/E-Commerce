@@ -39,7 +39,10 @@
                 <img src="/media/{{category.banner}}" alt="{{category.name}}" width="50">
             </a>
         </td>
-        <td><i class="bi bi-pencil"></i></td>
+        <td>
+          <a href="{% url 'adm:category_update' category.pk %}"><i class="bi bi-pencil"></i></a>
+          <a href="{% url 'adm:category_delete' category.pk %}"><i class="bi bi-trash3"></i></a>
+        </td>
     </tr>
     {% endfor %}
    </tbody>
@@ -87,7 +90,10 @@
                 <img src="/media/{{category.banner}}" alt="{{category.name}}" width="50">
             </a>
         </td>
-        <td><i class="bi bi-pencil"></i></td>
+        <td>
+          <a href="{% url 'adm:subcategory_update' category.pk %}"><i class="bi bi-pencil"></i></a>
+          <a href="{% url 'adm:subcategory_delete' category.pk %}"><i class="bi bi-trash3"></i></a>
+        </td>
     </tr>
     {% endfor %}
    </tbody>

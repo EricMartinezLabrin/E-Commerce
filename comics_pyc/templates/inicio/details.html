@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'inicio/base.html' %}
 {% load static %}
 
 {% block body %}
@@ -10,14 +10,14 @@
   <div class="mb-3">
     <div class="row g-0">
       <div class="col-md-4">
-        <img src="{% static 'inicio/Images/offer.png' %}" class="img-fluid rounded-start" alt="Producto">
+        <img src="/media/{{object.image}}" class="img-fluid rounded-start" alt="Producto">
       </div>
       <div class="col-md-8 main_background">
         <div class="detail-box card-body">
           <div class="description">          
-          <h3 class="card-title desktop">Nombre del Producto</h3>
-          <h4 class="card-text">$1.000</h4>
-          <p>Descripción del artículo</p>
+          <h3 class="card-title desktop">{{object.name}}</h3>
+          <h4 class="card-text">${{object.price}}</h4>
+          <p>{{object.description}}</p>
         </div>
 
           <div class="buttons">          

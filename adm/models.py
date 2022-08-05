@@ -14,15 +14,28 @@ class Category(models.Model):
     name = models.CharField(max_length=30,unique=True)
     banner = models.FileField(upload_to="categories/")
     status = models.BooleanField(default=True)
+    description = models.CharField(max_length=255,blank=True)
 
     def __str__(self):
         return self.name
 
 class SubCategory(models.Model):
     name = models.CharField(max_length=30,unique=True)
-    subcategory = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     banner = models.FileField(upload_to="subcategories/")
     status = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.subcategory + "/" + self.name
+        return self.name
+
+class Product(models.Model):
+    name = models.CharField(max_length=30, unique=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=False)
+    subcategory = models.ForeignKey(SubCategory, on_delete=models.CASCADE, blank=True)
+    price = models.IntegerField()
+    description = models.CharField(max_length=255)
+    status = models.BooleanField(default=True)
+    image = models.FileField(upload_to="products/")
+
+    def __str__(self):
+        return self.name

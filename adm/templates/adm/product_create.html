@@ -1,0 +1,12 @@
+{% extends 'adm/base.html' %}
+{% load static %}
+
+{% block body %}
+<h1>Crear Nuevo Producto</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" class="btn btn-primary" value="Crear">
+    <a href="{% url 'adm:products' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock body %}

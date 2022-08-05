@@ -1,0 +1,15 @@
+{% extends 'adm/base.html' %}
+{% load static %}
+{% block body %}
+<h1>Editar {{object.name}}</h1>
+
+      <form enctype="multipart/form-data" method="POST">
+
+            {% csrf_token %}
+            {{ form.as_p }}
+
+        <input type="submit" class="btn btn-primary" value="Actualizar">
+        <a href="{% url 'adm:products' %}" class="btn btn-secondary">Volver</a>
+    </form>
+{{form}}
+  {% endblock body %}
