@@ -6,7 +6,7 @@ from django.views.generic.base import TemplateView
 from django.views.generic import CreateView,UpdateView,DetailView,DeleteView, ListView
 
 #Local
-from .models import Banner,Category,SubCategory, Product
+from .models import Banner,Category,SubCategory, Product, Cart
 from .forms import AddNewBanner, AddCategory, AddSubCategory, AddProduct
 
 class IndexView(TemplateView):
@@ -77,7 +77,6 @@ class CategoryDeleteView(DeleteView):
     template_name = "adm/category_delete.html"
     success_url = reverse_lazy('adm:category')
 
-
 def Category_Create(request):
     if request.method == "POST":
         # Fetching the form data
@@ -139,22 +138,6 @@ class CreateProductView(CreateView):
     template_name = "adm/product_create.html"
     success_url = reverse_lazy('adm:products')
 
-# class UpdateProductView(UpdateView):
-#     model = Product
-#     template_name = "adm/product_update.html"
-#     form_class = AddProduct
-#     success_url = reverse_lazy('adm:product')
-
-#     def post(self, request, *args, **kwargs):
-#         # return super().post(request, *args, **kwargs)
-#         form_class = self.get_form_class()
-#         form = self.get_form(form_class)
-#         files = request.FILES["image"]
-#         if form.is_valid():
-#             return self.form_valid(form)
-#         else:
-#             return self.form_invalid(form)    
-
 def UpdateProduct(request,pk):
     product = Product.objects.get(pk=pk)
     form = AddProduct(request.POST or None, request.FILES or None, instance=product)
@@ -183,3 +166,21 @@ def UpdateProduct(request,pk):
         return render(request,"adm/product_update.html",{
             'form': form
         })
+
+class OrdersView(ListView):
+    model = Cart
+    template_name = "adm/order.html"
+    paginate_by = 20
+
+class OrdersDetailView(DetailView):
+    model = Cart
+    template_name = "adm/order_detail.html"
+
+    def get_products(self):
+        products = Cart.objects.filter(order=self.kwargs['pk'])
+        return products
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['products'] = OrdersDetailView.get_products(self)
+        return context
