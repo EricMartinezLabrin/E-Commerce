@@ -64,10 +64,24 @@ class Status(models.Model):
     def __str__(self):
         return self.name
 
+class Order(models.Model):
+    creation_date = models.DateTimeField(auto_now=True)
+    num_items_sold = models.IntegerField()
+    total_sale = models.IntegerField()
+    total_tax = models.IntegerField()
+    total_shipping = models.IntegerField()
+    total_neto = models.IntegerField()
+    customer = models.ForeignKey(User, on_delete=models.CASCADE)
+    status = models.ForeignKey(Status,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.id)
+
 class Cart(models.Model):
-    order = models.IntegerField()
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField()
+    total = models.IntegerField(blank=True,null=True)
     status = models.ForeignKey(Status,on_delete=models.CASCADE)
     customer = models.ForeignKey(User, on_delete=models.CASCADE)
     payment_date = models.DateTimeField(blank=True, null=True)

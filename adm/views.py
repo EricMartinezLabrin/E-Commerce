@@ -171,6 +171,9 @@ class OrdersView(ListView):
     model = Cart
     template_name = "adm/order.html"
     paginate_by = 20
+    def get_queryset(self):
+        orders = Cart.objects.filter()
+        return orders
 
 class OrdersDetailView(DetailView):
     model = Cart
