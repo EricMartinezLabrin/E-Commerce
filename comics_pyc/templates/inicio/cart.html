@@ -2,20 +2,44 @@
 {% load static %}
 
 {% block body %}
-<h1>Producto Agregado Correctamente</h1>
+<h1>Carrito de compras</h1>
 
 <div class="cart">
 <table class="table table-dark table-hover">
+  <head>
+    <th>Logotipo</th>
+    <th>Producto/descripción</th>
+    <th>Cantidad</th>
+    <th>Precio</th>
+    <th>Borrar</th>
+  </head>
     <tbody>
+      {% if request.session.cart_number.items %}
+      {% for key, value in request.session.cart_number.items %}
+        <tr>
+          <td><img src="{{value.image}}" alt="promo"></td>
+          <td> 
+              <h5>{{value.name}}</h5>
+              <p>{{value.description}}</p> 
+          </td>
+          <td>
+            <a href="{% url 'decrement' value.product_id %}" class="badge rounded-pill text-bg-danger">-</a>
+            x {{value.quantity}}
+            <a href="{% url 'add' value.product_id %}" class="badge rounded-pill text-bg-success">+</a>
+          </td>
+          <td>${{value.price}}</td>
+          <td><a href="{% url 'remove' value.product_id %}" class="btn btn-danger"><i class="bi bi-trash3-fill"></i></a></td>
+        </tr>
+      {% endfor %}
+      {% else %}
       <tr>
-        <th><p>1</p></th>
-        <td><img src="{% static 'inicio/Images/promo.png' %}" alt="promo"></td>
-        <td> 
-            <h5>Nombre del Producto</h5>
-            <p>Descripción del producto</p> 
+        <td colspan="4">
+               <div class="alert alert-danger" role="alert">
+        No hay productos en el carrito
+      </div> 
         </td>
-        <td><button type="button" class="btn btn-danger"><i class="bi bi-trash3-fill"></i></button></td>
       </tr>
+      {% endif %}
     </tbody>
   </table>
   <a href="{% url 'checkout' %}"><button class="strong w-98">Pagar</button></a>

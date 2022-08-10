@@ -1,9 +1,13 @@
-#Django
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 from django.views.generic.base import TemplateView
-from django.views.generic import DetailView
+from django.views.generic import DetailView,ListView,CreateView
 from django.shortcuts import render
+
+#local
 from .functions import Show
-from adm.models import Banner, Category, Product
+from adm.models import Banner, Category, Product, Order
+from .cart import CartProcessor
 
 class IndexView(TemplateView):
     template_name = 'inicio/index.html'
@@ -62,8 +66,37 @@ class DetailView(DetailView):
 class CartView(TemplateView):
     template_name = 'inicio/cart.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categories"] = IndexView.show_category()
+        return context
+    
+        
+
 class CheckoutView(TemplateView):
     template_name = 'inicio/checkout.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categories"] = IndexView.show_category()
+        return context
 
 class LoginView(TemplateView):
     template_name = 'inicio/login.html'
+
+def addCart(request,product_id):
+    cart = CartProcessor(request)
+    product = Product.objects.get(pk=product_id)
+    cart.add(product)  
+    return HttpResponseRedirect(reverse("cart"))
+
+def removeCart(request,product_id):
+    cart = CartProcessor(request)
+    product = Product.objects.get(pk=product_id)
+    cart.remove(product)  
+    return HttpResponseRedirect(reverse("cart"))
+
+def decrementCart(request,product_id):
+    cart = CartProcessor(request)
+    product = Product.objects.get(pk=product_id)
+    cart.decrement(product)  
+    return HttpResponseRedirect(reverse("cart"))

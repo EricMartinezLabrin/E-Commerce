@@ -49,7 +49,7 @@ class SubCategory(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=30, unique=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=False)
-    subcategory = models.ForeignKey(SubCategory, on_delete=models.CASCADE, blank=True)
+    subcategory = models.ForeignKey(SubCategory, on_delete=models.CASCADE, blank=True, null=True)
     price = models.IntegerField()
     description = models.CharField(max_length=255)
     status = models.BooleanField(default=True)
@@ -64,13 +64,19 @@ class Status(models.Model):
     def __str__(self):
         return self.name
 
+class Tax(models.Model):
+    name = models.CharField(max_length=10)
+    tax = models.IntegerField()
+
+    def __str__(self):
+        return self.name
+
 class Order(models.Model):
     creation_date = models.DateTimeField(auto_now=True)
     num_items_sold = models.IntegerField()
-    total_sale = models.IntegerField()
-    total_tax = models.IntegerField()
+    subtotal = models.IntegerField()
     total_shipping = models.IntegerField()
-    total_neto = models.IntegerField()
+    total = models.IntegerField()
     customer = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.ForeignKey(Status,on_delete=models.CASCADE)
 
@@ -81,10 +87,6 @@ class Cart(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField()
-    total = models.IntegerField(blank=True,null=True)
-    status = models.ForeignKey(Status,on_delete=models.CASCADE)
-    customer = models.ForeignKey(User, on_delete=models.CASCADE)
-    payment_date = models.DateTimeField(blank=True, null=True)
     creation_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):

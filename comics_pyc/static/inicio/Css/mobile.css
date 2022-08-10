@@ -162,3 +162,6 @@ div.cart img{
 div.bg-orange{
     background-color: var(--orange_icons);
 }
+div.cart a{
+    text-decoration: None!important;
+}

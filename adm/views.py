@@ -6,7 +6,7 @@ from django.views.generic.base import TemplateView
 from django.views.generic import CreateView,UpdateView,DetailView,DeleteView, ListView
 
 #Local
-from .models import Banner,Category,SubCategory, Product, Cart
+from .models import Banner,Category,SubCategory, Product, Cart, Order
 from .forms import AddNewBanner, AddCategory, AddSubCategory, AddProduct
 
 class IndexView(TemplateView):
@@ -187,3 +187,7 @@ class OrdersDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['products'] = OrdersDetailView.get_products(self)
         return context
+
+
+
+

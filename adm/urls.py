@@ -22,6 +22,7 @@ urlpatterns = [
     path("products/create", views.CreateProductView.as_view(), name ="products_create"),
     path("products/update/<int:pk>", views.UpdateProduct, name ="products_update"),
     path("orders", views.OrdersView.as_view(), name ="orders"),
+    path("orders/add/<int:order>", views.OrdersView.as_view(), name ="orders_add"),
     path("orders/detail/<int:pk>", views.OrdersDetailView.as_view(), name ="orders_detail"),
 
 ]
