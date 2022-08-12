@@ -1,5 +1,6 @@
 {% extends 'inicio/base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block body %}
 <h1>Carrito de compras</h1>
@@ -27,11 +28,12 @@
             x {{value.quantity}}
             <a href="{% url 'add' value.product_id %}" class="badge rounded-pill text-bg-success">+</a>
           </td>
-          <td>${{value.price}}</td>
+          <td>${{value.price|intcomma}}</td>
           <td><a href="{% url 'remove' value.product_id %}" class="btn btn-danger"><i class="bi bi-trash3-fill"></i></a></td>
         </tr>
       {% endfor %}
       {% else %}
+
       <tr>
         <td colspan="4">
                <div class="alert alert-danger" role="alert">
@@ -40,6 +42,10 @@
         </td>
       </tr>
       {% endif %}
+      <tr>
+        <td colspan="4"></td>
+        <td> Total ${{request.session.cart_total|intcomma}}</td>
+      </tr>
     </tbody>
   </table>
   <a href="{% url 'checkout' %}"><button class="strong w-98">Pagar</button></a>

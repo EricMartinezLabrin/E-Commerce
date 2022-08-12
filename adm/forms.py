@@ -1,5 +1,10 @@
+#Django
 from django import forms
-from .models import Banner,Category,SubCategory,Product
+from django.contrib.auth.models import User
+
+#Local
+from .models import Banner,Category,SubCategory,Product,UserDetail
+
 
 class AddNewBanner(forms.ModelForm):
 
@@ -67,3 +72,15 @@ class AddProduct(forms.ModelForm):
             'description': forms.TextInput(attrs={'class':'form-control'}),
             'image': forms.FileInput(attrs={'class':'form-control', 'acept':'image/png'})
         }
+
+class CreateUser(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = ['password','username','first_name','last_name','email',]
+
+class CreateUserDetail(forms.ModelForm):
+
+    class Meta:
+        model = UserDetail
+        fields = '__all__'

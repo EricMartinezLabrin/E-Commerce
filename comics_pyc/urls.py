@@ -32,8 +32,11 @@ urlpatterns = [
     path('cart/remove/<int:product_id>', views.removeCart, name='remove'),
     path('cart/decrement/<int:product_id>', views.decrementCart, name='decrement'),
     path('checkout', views.CheckoutView.as_view(), name='checkout'),
+    path('checkout/successfully', views.SuccessfullyView.as_view(), name="successfully"),
+    path('checkout/failed', views.FailedView.as_view(), name="failed"),
     path('login', views.LoginView.as_view(), name='login'),
-    path('adm/', include('adm.urls'))
+    path('adm/', include('adm.urls')),
+    path('user/create', views.CreateUser, name="create_user")
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

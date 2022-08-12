@@ -1,13 +1,55 @@
 from django.urls import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.views.generic.base import TemplateView
 from django.views.generic import DetailView,ListView,CreateView
 from django.shortcuts import render
+from django.contrib.auth.models import User
 
 #local
 from .functions import Show
-from adm.models import Banner, Category, Product, Order
+from adm.models import Banner, Category, Product, Order,UserDetail
 from .cart import CartProcessor
+from adm import forms
+
+def CreateUser(request):
+    if request.method == 'POST':
+        form_user = forms.CreateUser(request.POST)
+        form_detail = forms.CreateUserDetail(request.POST)
+
+        if form_user.is_valid():
+            #User
+            password = form_user.cleaned_data['password']
+            username = form_user.cleaned_data['username']
+            first_name = form_user.cleaned_data['first_name']
+            last_name = form_user.cleaned_data['last_name']
+            email = form_user.cleaned_data['email']
+
+            if form_detail.is_valid():
+                #UserDetail
+                adress = form_detail.cleaned_data['adress']
+                interior_number =  form_detail.cleaned_data['interior_number']
+                comuna = form_detail.cleaned_data['comuna']
+                region = form_detail.cleaned_data['region']
+                phone = form_detail.cleaned_data['phone']
+
+                user = User.objects.create_user(username,email,password)
+                user.first_name = first_name
+                user.last_name = last_name
+                user.save()
+
+                userdetail = UserDetail.objects.create(user=user.id)
+                userdetail.adress = adress
+                userdetail.interior_number = interior_number
+                userdetail.comuna = comuna
+                userdetail.region = region
+                userdetail.phone = phone
+                userdetail.save()
+
+                return HttpResponseRedirect(reverse("successfully"))
+        else:
+            return HttpResponseRedirect(reverse("failed"))
+    else:
+        return HttpResponse("No llega el formulario")
 
 class IndexView(TemplateView):
     template_name = 'inicio/index.html'
@@ -79,6 +121,12 @@ class CheckoutView(TemplateView):
         context = super().get_context_data(**kwargs)
         context["categories"] = IndexView.show_category()
         return context
+
+class SuccessfullyView(TemplateView):
+    template_name = 'inicio/successfully.html'
+
+class FailedView(TemplateView):
+    template_name = 'inicio/failed.html'
 
 class LoginView(TemplateView):
     template_name = 'inicio/login.html'

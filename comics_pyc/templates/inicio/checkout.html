@@ -1,5 +1,6 @@
 {% extends 'inicio/base.html' %}
 {% load static %}
+{% load humanize %}
 {% block body %}
 <div class="container">
     <main>
@@ -8,48 +9,53 @@
         <h2>Terminar Compra</h2>
         <p class="lead">Muchas gracias por preferirnos, a continuacion encontraras el detalle de tu compra</p>
       </div>
-  
       <div class="row g-5">
         <div class="col-md-5 col-lg-4 order-md-last">
           <h4 class="d-flex justify-content-between align-items-center mb-3">
             <span class="text-primary">Tu Carrito</span>
-            <span class="badge bg-primary rounded-pill">3</span>
+            <span class="badge bg-primary rounded-pill">{{request.session.cart_quantity}}</span>
           </h4>
           <ul class="list-group mb-3">
             {% if request.session.cart_number.items %}
             {% for key, value in request.session.cart_number.items %}
             <li class="list-group-item d-flex justify-content-between lh-sm">
               <div>
-                <h6 class="my-0">{{value.name}}</h6>
+                <h6 class="my-0">{{value.name}} - x{{value.quantity}}</h6>
                 <small class="text-muted">{{value.description}}</small>
               </div>
-              <span class="text-muted">${{value.price}}</span>
+              <span class="text-muted">${{value.price|intcomma}}</span>
             </li>
             {% endfor %}
             {% endif %}
-            <li class="list-group-item d-flex justify-content-between bg-light">
+
+            <!--MOSTRAR CUPON-->
+            {% comment %} <li class="list-group-item d-flex justify-content-between bg-light">
               <div class="text-success">
                 <h6 class="my-0">Cupón</h6>
                 <small>Cupón de ejemplo</small>
               </div>
               <span class="text-success">−$5000</span>
-            </li>
+            </li> {% endcomment %}
+
             <li class="list-group-item d-flex justify-content-between">
               <span>Total (Pesos Chilenos)</span>
-              <strong>$9200</strong>
+              <strong>${{request.session.cart_total|intcomma}}</strong>
             </li>
           </ul>
   
-          <form class="card p-2">
+          <!--APLICAR CUPON-->
+          {% comment %} <form class="card p-2">
             <div class="input-group">
               <input type="text" class="form-control" placeholder="Promo code">
               <button type="submit" class="btn btn-secondary">Redeem</button>
             </div>
-          </form>
+          </form> {% endcomment %}
+          
         </div>
         <div class="col-md-7 col-lg-8">
           <h4 class="mb-3">Datos para el envío</h4>
-          <form class="needs-validation" novalidate>
+          <form action="{% url 'create_user' %}" class="needs-validation" method="POST" novalidate>
+            {% csrf_token %}
             <div class="row g-3">
               <div class="col-sm-6">
                 <label for="firstName" class="form-label">Nombre</label>
@@ -77,6 +83,18 @@
                   </div>
                 </div>
               </div>
+
+              <div class="col-12">
+                <label for="username" class="form-label">Contraseña</label>
+                <div class="input-group has-validation">
+                  <span class="input-group-text"></span>
+                  <input type="password" class="form-control" id="username" placeholder="password" required>
+                <div class="invalid-feedback">
+                    Una contraseña es requerida para seguir el estado de tu compra.
+                  </div>
+                </div>
+              </div>
+
   
               <div class="col-12">
                 <label for="email" class="form-label">E-mail <span class="text-muted">(Optional)</span></label>
@@ -115,62 +133,8 @@
             </div>
   
             <hr class="my-4">
-  
-            <h4 class="mb-3">Pago</h4>
-  
-            <div class="my-3">
-              <div class="form-check">
-                <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked required>
-                <label class="form-check-label" for="credit">Tarjeta de Crédito</label>
-              </div>
-              <div class="form-check">
-                <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required>
-                <label class="form-check-label" for="debit">Paypal</label>
-              </div>
-              <div class="form-check">
-                <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required>
-                <label class="form-check-label" for="paypal">Transferencia</label>
-              </div>
-            </div>
-  
-            <div class="row gy-3">
-              <div class="col-md-6">
-                <label for="cc-name" class="form-label">Nombre del titular</label>
-                <input type="text" class="form-control" id="cc-name" placeholder="" required>
-                <small class="text-muted">Tal como aparece en la tarjeta</small>
-                <div class="invalid-feedback">
-                  El nombre es requerido
-                </div>
-              </div>
-  
-              <div class="col-md-6">
-                <label for="cc-number" class="form-label">Número de Tarjeta</label>
-                <input type="text" class="form-control" id="cc-number" placeholder="" required>
-                <div class="invalid-feedback">
-                  Número de tarjeta es requerido
-                </div>
-              </div>
-  
-              <div class="col-md-3">
-                <label for="cc-expiration" class="form-label">Fecha de Vencimiento</label>
-                <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
-                <div class="invalid-feedback">
-                  La fecha de vencimiento es requerida
-                </div>
-              </div>
-  
-              <div class="col-md-3">
-                <label for="cc-cvv" class="form-label">CVV</label>
-                <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
-                <div class="invalid-feedback">
-                  El codigo de seguridad es requerido
-                </div>
-              </div>
-            </div>
-  
-            <hr class="my-4">
-  
-            <button class="w-100 btn btn-primary btn-lg" type="submit">Continuar para pagar.</button>
+    
+            <button class="w-100 btn btn-primary btn-lg" type="submit">Continuar para pagar...</button>
           </form>
         </div>
       </div>
