@@ -1,6 +1,7 @@
 #Django
 from django import forms
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
 #Local
 from .models import Banner,Category,SubCategory,Product,UserDetail
@@ -73,14 +74,21 @@ class AddProduct(forms.ModelForm):
             'image': forms.FileInput(attrs={'class':'form-control', 'acept':'image/png'})
         }
 
-class CreateUser(forms.ModelForm):
-
+class CreateUser(UserCreationForm):
+    
     class Meta:
         model = User
-        fields = ['password','username','first_name','last_name','email',]
+        fields = ['first_name','last_name','email','username','password1','password2']
 
 class CreateUserDetail(forms.ModelForm):
 
     class Meta:
         model = UserDetail
-        fields = '__all__'
+        fields = ['phone','address','interior_number','comuna','region']
+        widgets = {
+            'phone': forms.NumberInput(attrs={'class':'form-control','id':'phone'}),
+            'address': forms.TextInput(attrs={'class':'form-control','id':'address'}),
+            'interior_number': forms.NumberInput(attrs={'class':'form-control','id':'address2'}),
+            'comuna': forms.TextInput(attrs={'class':'form-control','id':'comuna'}),
+            'region': forms.Select(attrs={'class':'form-control','id':'state'})
+        }

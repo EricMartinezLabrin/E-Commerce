@@ -132,11 +132,11 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = reverse_lazy("adm:dashboard")
+LOGIN_REDIRECT_URL = reverse_lazy("home")
 
-LOGOUT_REDIRECT_URL = reverse_lazy("adm:index")
+LOGOUT_REDIRECT_URL = reverse_lazy("login")
 
-LOGIN_URL = reverse_lazy("adm:index")
+LOGIN_URL = reverse_lazy("login")
 
 # DATETIME_FORMAT = "d - M - y"
 

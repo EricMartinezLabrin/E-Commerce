@@ -54,79 +54,44 @@
         </div>
         <div class="col-md-7 col-lg-8">
           <h4 class="mb-3">Datos para el envío</h4>
-          <form action="{% url 'create_user' %}" class="needs-validation" method="POST" novalidate>
+          <form class="needs-validation" method="POST" novalidate>
             {% csrf_token %}
             <div class="row g-3">
-              <div class="col-sm-6">
-                <label for="firstName" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
-                <div class="invalid-feedback">
-                  Un nombre válido es requerido
-                </div>
-              </div>
-  
-              <div class="col-sm-6">
-                <label for="lastName" class="form-label">Apellido</label>
-                <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
-                <div class="invalid-feedback">
-                  Un apellido válido es requerido
-                </div>
-              </div>
-  
-              <div class="col-12">
-                <label for="username" class="form-label">Usuario</label>
-                <div class="input-group has-validation">
-                  <span class="input-group-text">@</span>
-                  <input type="text" class="form-control" id="username" placeholder="Username" required>
-                <div class="invalid-feedback">
-                    Un usuario es requerido para seguir el estado de tu compra.
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-12">
-                <label for="username" class="form-label">Contraseña</label>
-                <div class="input-group has-validation">
-                  <span class="input-group-text"></span>
-                  <input type="password" class="form-control" id="username" placeholder="password" required>
-                <div class="invalid-feedback">
-                    Una contraseña es requerida para seguir el estado de tu compra.
-                  </div>
-                </div>
-              </div>
-
-  
-              <div class="col-12">
-                <label for="email" class="form-label">E-mail <span class="text-muted">(Optional)</span></label>
-                <input type="email" class="form-control" id="email" placeholder="you@example.com">
-                <div class="invalid-feedback">
-                  Porfavor indicanos un E-Mail valido para enviarte informacion importante de tu pedido
-                </div>
-              </div>
   
               <div class="col-12">
                 <label for="address" class="form-label">Dirección</label>
-                <input type="text" class="form-control" id="address" placeholder="1234 Main St" required>
+                {{form_detail.address}}
                 <div class="invalid-feedback">
                   Porfavor ingresa una dirección válida
                 </div>
               </div>
   
               <div class="col-12">
-                <label for="address2" class="form-label">Datos complementarios de tu dirección <span class="text-muted">(Optional)</span></label>
-                <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
+                <label for="address2" class="form-label">Número Interior / Depto <span class="text-muted">(Opcional)</span></label>
+                {{form_detail.interior_number}}
               </div>
   
               <div class="col-md-4">
-                <label for="state" class="form-label">Ciudad</label>
-                <select class="form-select" id="state" required>
-                  <option value="">Selecciona una</option>
-                  <option>Iquique</option>
-                  <option>Santiago</option>
-                  <option>Chuchunco pa'entro</option>
-                </select>
+                <label for="state" class="form-label">Comuna</label>
+                  {{form_detail.comuna}}
                 <div class="invalid-feedback">
                   Indicanos una ciudad valida
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <label for="state" class="form-label">Región</label>
+                {{form_detail.region}}
+                <div class="invalid-feedback">
+                  Indicanos una ciudad valida
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <label for="email" class="form-label">WhatsApp</label>
+                {{form_detail.phone}}
+                <div class="invalid-feedback">
+                  Porfavor indicanos un Whats App valido para enviarte informacion importante de tu pedido
                 </div>
               </div>
   

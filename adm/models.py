@@ -17,7 +17,7 @@ class UserDetail(models.Model):
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.user
+        return self.user.username
 
 class Banner(models.Model):
     name = models.CharField(max_length=50,unique=True)

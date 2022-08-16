@@ -61,7 +61,7 @@ white-space: nowrap;
 -webkit-overflow-scrolling: touch;
 }
 
-.form-signin {
+.form-signin, .form-signout {
 max-width: 330px;
 padding: 15px;
 }
@@ -80,6 +80,10 @@ border-bottom-left-radius: 0;
 margin-bottom: 10px;
 border-top-left-radius: 0;
 border-top-right-radius: 0;
+}
+
+.form-signout input{
+    margin-bottom: 0.3rem;
 }
 
 @media (min-width: 768px) {

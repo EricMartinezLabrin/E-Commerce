@@ -1,0 +1,61 @@
+
+{% load static %}
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>Login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'inicio/Css/mobile.css'%}">
+    <link rel="stylesheet" href="{% static 'inicio/Css/tablet.css'%}" media="screen and (min-width: 600px)">
+    <link rel="stylesheet" href="{% static 'inicio/Css/desktop.css'%}" media="screen and (min-width: 800px)">
+    <link rel="stylesheet" href="{% static 'inicio/Css/login.css'%}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  </head>
+  <body class="text-center">
+
+    {% comment %} {{form.as_p}} {% endcomment %}
+    
+<main class="form-signout w-100 m-auto">
+  <form method="POST">
+    {% csrf_token %}
+    <img class="mb-4" src="{% static 'inicio/Images/logo.png' %}" alt="" width="172" height="157">
+    <h1 class="h3 mb-3 fw-normal white">Registrarse</h1>
+
+    <div class="form-floating">
+        <input type="email" class="form-control up" id="email" placeholder="E-Mail" name="{{form.email.name}}">
+        <label for="email">E-mail</label>
+      </div>
+    <div class="form-floating">
+      <input type="text" class="form-control" id="usuario" placeholder="Username" name="{{form.username.name}}">
+      <label for="usuario">Usuario</label>
+    </div>
+
+    <div class="form-floating">
+        <input type="password" class="form-control" id="password1" placeholder="Contraseña" name="{{form.password1.name}}">
+        <label for="password1">Contraseña</label>
+    </div>
+    <div class="form-floating">
+      <input type="password" class="form-control" id="Password2" placeholder="Confirma Contraseña" name="{{form.password2.name}}">
+      <label for="Password2">Confirma Contraseña</label>
+    </div>
+    <div class="form-floating">
+        <input type="text" class="form-control" id="first_name" placeholder="Nombre" name="{{form.first_name.name}}">
+        <label for="first_name">Nombre</label>
+    </div>
+    
+    <div class="form-floating">
+    <input type="text" class="form-control down" id="last_name" placeholder="Apellido" name="{{form.last_name.name}}">
+    <label for="last_name">Apellido</label>
+    </div>
+
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Registrarme</button>
+    <p class="mt-5 mb-3 text-muted white">&copy; 2022</p>
+  </form>
+</main>
+  </body>
+</html>
