@@ -1,7 +1,8 @@
 {% extends 'adm/base.html' %}
 {% load static %}
+{% load humanize %}
 {% block body %}
-<h1>Detalles del pedido #{{object.order}}
+<h1>Detalles del pedido #{{object.id}}
 <a href="{% url 'adm:orders' %}" class="btn btn-warning">Volver</a>
 </h1>
 <div class="d-flex">
@@ -12,8 +13,7 @@
             <p>{{object.creation_date}}</p>
         
             <h5>Estado:</h5>
-            <p>{{object.status}}</p>
-        
+            <p class="badge text-bg-{{badge}}">{{object.status}}</p>
             <h5>Cliente:</h5>
             <div class="d-flex">
                 <div class="p-3">
@@ -71,12 +71,17 @@
             <tr>
                 <th><img src="/media/{{product.product.image}}" alt="{{product.product.name}}" width="50">
                  {{product.product.name}}</th>
-                <th>${{product.product.price}}</th>
+                <th>${{product.product.price|intcomma}}</th>
                 <th>x {{product.quantity}}</th>
-                <th>${{product.total}}</th>
+                <th>${{product.subtotal|intcomma}}</th>
                 
             </tr>
         {% endfor %} 
+        <tr>
+            <td colspan="2"></td>
+            <td>Total:</td>
+            <td>${{object.total|intcomma}}</td>
+        </tr>
     </tbody>
     </table>
 </div>

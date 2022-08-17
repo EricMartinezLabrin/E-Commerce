@@ -168,24 +168,29 @@ def UpdateProduct(request,pk):
         })
 
 class OrdersView(ListView):
-    model = Cart
+    model = Order
     template_name = "adm/order.html"
     paginate_by = 20
-    def get_queryset(self):
-        orders = Cart.objects.filter()
-        return orders
+
 
 class OrdersDetailView(DetailView):
-    model = Cart
+    model = Order
     template_name = "adm/order_detail.html"
 
     def get_products(self):
         products = Cart.objects.filter(order=self.kwargs['pk'])
         return products
 
+    def badge(self):
+        status = Order.objects.get(pk=self.kwargs['pk']).status.id
+        if status == 1: #Pendiente de Pago
+            badge = 'warning'
+            return badge
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['products'] = OrdersDetailView.get_products(self)
+        context['badge'] = OrdersDetailView.badge(self)
         return context
 
 

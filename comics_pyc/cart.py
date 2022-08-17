@@ -21,7 +21,7 @@ class CartProcessor:
         id = str(product.id)
         if id not in self.carrito.keys():
             self.carrito[id]={
-                'product_id': product.id,
+                'product_id': int(product.id),
                 'name': product.name,
                 'quantity': 1,
                 'price': int(product.price),

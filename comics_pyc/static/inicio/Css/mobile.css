@@ -155,7 +155,7 @@ div.cart img{
 .light{
     border-radius: 0.5rem;
     border-color: var(--orange_icons);
-    background-color: var(--background_body);
+    background-color: transparent;
     font-weight: 200;
     color: var(--orange_icons);
 }

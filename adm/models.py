@@ -87,6 +87,7 @@ class Cart(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField()
+    subtotal = models.IntegerField()
     creation_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):

@@ -1,0 +1,14 @@
+{% extends 'inicio/base.html' %}
+{% block body %}
+
+<h1>Todos los Artículos</h1>
+<div class="d-flex align-content-center">
+    <div class="d-flex align-content-center flex-wrap">
+        {% for product in object_list %}   
+            {% include 'inicio/product_card.html' %} 
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock body %}

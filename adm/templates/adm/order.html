@@ -1,5 +1,6 @@
 {% extends 'adm/base.html' %}
 {% load static %}
+{% load humanize %}
 {% block body %}
 <h1>Ordenes</h1>
 <br>
@@ -16,14 +17,14 @@
         
         {% for order in object_list %}
         <tr>
-            <td>#{{order.order}} - {{order.customer}}</td>
-            <td>{{order.order}}</td>
+            <td>#{{order.id}} - {{order.customer}}</td>
+            <td>{{order.creation_date}}</td>
             <td>{{order.status}}</td>
-            <td>${{order.order}}</td>
+            <td>${{order.total|intcomma}}</td>
             <td>
                 <a href="#"><i class="bi bi-pencil"></i></a>
                 <a href="#"><i class="bi bi-trash3"></i></a>  
-                <a href="{% url 'adm:orders_detail' order.order %}"><i class="bi bi-eye"></i></a>      
+                <a href="{% url 'adm:orders_detail' order.id %}"><i class="bi bi-eye"></i></a>      
             </td>
         </tr>
         {% endfor %}

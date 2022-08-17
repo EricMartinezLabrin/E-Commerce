@@ -10,7 +10,7 @@ from django.contrib.auth import authenticate, login
 
 #local
 from .functions import Show
-from adm.models import Banner, Category, Product, Order,UserDetail
+from adm.models import Banner, Category, Product, Order,UserDetail, Status,Cart
 from .cart import CartProcessor
 from adm import forms
 
@@ -76,6 +76,15 @@ class IndexView(TemplateView):
         context['products'] = IndexView.show_product()
         return context
 
+class AllProductsView(ListView):
+    template_name = 'inicio/all_products.html'
+    model = Product
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = IndexView.show_category()
+        return context
+
 class CategoriesView(DetailView):
     template_name = 'inicio/categorie.html'
     model = Category
@@ -105,19 +114,29 @@ class CartView(TemplateView):
 def CheckoutView(request):
     template_name = 'inicio/checkout.html'
     details = User.objects.get(pk=request.user.id)
-    form = forms.CreateUserDetail(request.POST or None, instance=details.userdetail)
+    try:
+        form = forms.CreateUserDetail(request.POST or None, instance=details.userdetail)
+    except:
+        form = forms.CreateUserDetail(request.POST or None)
+        if request.method == 'POST':
+            if form.is_valid():
+                user_details = UserDetail()
+                user_details.phone = form.cleaned_data['phone']
+                user_details.address = form.cleaned_data['address']
+                user_details.interior_number = form.cleaned_data['interior_number']
+                user_details.comuna = form.cleaned_data['comuna']
+                user_details.region = form.cleaned_data['region']
+                user_details.user = details
+                user_details.save()
+                return HttpResponseRedirect(reverse('payment'))
+        return render(request,template_name,{
+            'form_detail':form
+        })
 
     if request.method == 'POST':
         if form.is_valid():
-            user_details = UserDetail()
-            user_details.phone = form.cleaned_data['phone']
-            user_details.address = form.cleaned_data['address']
-            user_details.interior_number = form.cleaned_data['interior_number']
-            user_details.comuna = form.cleaned_data['comuna']
-            user_details.region = form.cleaned_data['region']
-            user_details.user = details
-            user_details.save()
-            return HttpResponseRedirect(reverse('successfully'))
+            form.save()
+            return HttpResponseRedirect(reverse('payment'))
         else:
             return render(request,'inicio/failed.html',{
                 'error': form
@@ -126,6 +145,41 @@ def CheckoutView(request):
 
     return render(request,template_name,{
         'form_detail': form
+    })
+
+def paymentView(request):
+    cart_data = request.session.get('cart_number')
+
+    if cart_data is not {}:
+        template_name = 'inicio/successfully.html'
+        order = Order()
+        subtotal = request.session.get('cart_total')
+        total_shipping = 0
+
+        #Order
+        order.num_items_sold = request.session.get('cart_quantity')
+        order.subtotal = subtotal
+        order.total_shipping = total_shipping
+        order.total = int(subtotal)+int(total_shipping)
+        order.customer = request.user
+        order.status = Status.objects.get(pk=1)
+        order.save()
+
+        #Cart
+        for key,value in cart_data.items():
+            order_id = Order.objects.filter(customer=request.user, status=Status.objects.get(pk=1)).last()
+            product = Product.objects.get(pk=value['product_id'])
+            quantity = value['quantity']
+            subtotal = value['price']
+            Cart.objects.create(order=order_id,product=product,quantity=quantity,subtotal=subtotal)
+
+        request.session['cart_number']={}
+        request.session['cart_total'] = 0
+        request.session['cart_quantity'] = 0
+        request.session.modified=True
+
+        return render(request,template_name,{
+        'order': order_id
     })
 
 class SuccessfullyView(TemplateView):

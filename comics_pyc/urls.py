@@ -30,6 +30,7 @@ urlpatterns = [
     path('login', views.LoginView.as_view(redirect_authenticated_user=True), name='login'),
     path('logout', views.Logout.as_view(), name='logout'),
     path('adm/', include('adm.urls')),
+    path('all_products', views.AllProductsView.as_view(), name="all_products"),
     path('user/create', views.CreateUser, name="create_user"),
     path('categories/<int:pk>', views.CategoriesView.as_view(), name='categories'),
     path('details/<int:pk>', views.DetailView.as_view(), name='details'),
@@ -38,6 +39,7 @@ urlpatterns = [
     path('cart/remove/<int:product_id>', views.removeCart, name='remove'),
     path('cart/decrement/<int:product_id>', views.decrementCart, name='decrement'),
     path('checkout/', login_required(views.CheckoutView), name='checkout'),
+    path('checkout/payment', login_required(views.paymentView), name='payment'),
     path('checkout/successfully', login_required(views.SuccessfullyView.as_view()), name="successfully"),
     path('checkout/failed', login_required(views.FailedView.as_view()), name="failed"),
 
