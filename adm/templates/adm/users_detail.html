@@ -2,22 +2,41 @@
 {% load static %}
 {% load humanize %}
 {% block body %}
-{% if object.first_name %}
-<h1>{{object.first_name}} {{object.last_name}}</h1>
+{% if object.user.first_name %}
+<h1>Detalles de {{object.user.first_name}} {{object.user.last_name}} <a href="{% url 'adm:users' %}" class="btn btn-warning">Volver</a></h1>
 {% else %}
-<h1>{{object.username}}</h1>
+<h1>Detalles de {{object.user.username}} <a href="{% url 'adm:users' %}" class="btn btn-warning">Volver</a></h1>
 {% endif %}
-<a href="{% url 'adm:orders' %}" class="btn btn-warning">Volver</a>
+
 
 <div>
-        <h2>General</h2>
         <h5>Nombre:</h5>
-        <p>{{object}} {{object.user.last_name}}</p>
-        
+        <p>{{object.user.first_name}} {{object.user.last_name}}</p>
+        {% if not object.user.first_name %}
+        <p>Nombre no disponible</p>
+        {% endif %}
+        <h5>Username:</h5>
+        <p>{{object.user.username}}</p>
         <h5>Teléfono:</h5>
         <p>{{object.user.userdetail.phone}}</p>
         <h5>E-Mail:</h5>
         <p>{{object.user.email}}</p>
+        <h5>Dirección</h5>
+        {% if object.address %}
+                <p>{{object.address}}, {{object.interior_number}},{{object.comuna}}, {{object.region}}</p>
+        {% else %}
+        <p>No hay dirección establecida</p>
+        {% endif %}
+        <h5>Paqueteria Preferida</h5>
+        {% if object.parcel %}
+                <div class="d-flex">
+                        <img src="/media/{{object.parcel.image}}" alt="{{object.parcel.name}}" width="50">
+                        <p class="baseline"> | {{object.parcel.name}}</p>
+                </div>
+
+        {% else %}
+        <p>No Hay paqueteria definida</p>
+        {% endif %}
 </div>
 
 

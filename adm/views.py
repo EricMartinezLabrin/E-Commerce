@@ -10,7 +10,7 @@ from django.contrib.auth.views import redirect_to_login
 from django.contrib.auth.models import User
 
 #Local
-from .models import Banner,Category,SubCategory, Product, Cart, Order, Parcel, UserDetail
+from .models import Banner,Category,SubCategory, Product, Cart, Order, Parcel, UserDetail, Region
 from .forms import AddNewBanner, AddCategory, AddSubCategory, AddProduct, CreateParcel, OrderStatus
 from comics_pyc.functions import Show
 
@@ -271,7 +271,15 @@ class UsersDeleteView(UserAccessMixin,DeleteView):
 
 def UserDetailView(request,pk):
     permission_required = 'is_staff'
-    model = UserDetail.objects.filter(user=pk)
+
+    try:
+        model = UserDetail.objects.get(user=pk)
+    except:
+        user = User.objects.get(pk=pk)
+        region = Region.objects.get(pk=1)#Otros
+        UserDetail.objects.create(user=user,interior_number=0,region=region)
+        model = UserDetail.objects.get(user=pk)
+
     template_name = 'adm/users_detail.html'
 
     return render(request,template_name,{
