@@ -19,11 +19,11 @@
         <tr>
             <td>#{{order.id}} - {{order.customer}}</td>
             <td>{{order.creation_date}}</td>
-            <td>{{order.status}}</td>
+            <td><p class="badge text-bg-{{badge}}">{{order.status}}</p></td>
             <td>${{order.total|intcomma}}</td>
             <td>
-                <a href="#"><i class="bi bi-pencil"></i></a>
-                <a href="#"><i class="bi bi-trash3"></i></a>  
+                <a href="{% url 'adm:orders_status_update' order.id %}"><i class="bi bi-pencil"></i></a>
+                <a href="{% url 'adm:orders_delete' order.id %}"><i class="bi bi-trash3"></i></a>  
                 <a href="{% url 'adm:orders_detail' order.id %}"><i class="bi bi-eye"></i></a>      
             </td>
         </tr>

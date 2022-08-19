@@ -1,10 +1,11 @@
 #Django
+from tkinter import Widget
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
 #Local
-from .models import Banner,Category,SubCategory,Product,UserDetail
+from .models import Banner,Category,SubCategory,Product,UserDetail, Parcel, Order
 
 
 class AddNewBanner(forms.ModelForm):
@@ -84,11 +85,40 @@ class CreateUserDetail(forms.ModelForm):
 
     class Meta:
         model = UserDetail
-        fields = ['phone','address','interior_number','comuna','region']
+        fields = ['phone','address','interior_number','comuna','region','parcel']
         widgets = {
             'phone': forms.NumberInput(attrs={'class':'form-control','id':'phone'}),
             'address': forms.TextInput(attrs={'class':'form-control','id':'address'}),
             'interior_number': forms.NumberInput(attrs={'class':'form-control','id':'address2'}),
             'comuna': forms.TextInput(attrs={'class':'form-control','id':'comuna'}),
-            'region': forms.Select(attrs={'class':'form-control','id':'state'})
+            'region': forms.Select(attrs={'class':'form-control','id':'state'}),
+            'parcel': forms.RadioSelect(attrs={'id':'parcel'})
+        }
+
+class CreateParcel(forms.ModelForm):
+    class Meta:
+        model = Parcel
+        fields = ['name','min_price','max_price','image']
+        labels = {
+            'name': 'Nombre de Paqueteria',
+            'min_price': 'Precio Mínimo',
+            'max_price': 'Precio Máximo',
+            'image': 'Logo de Paqueteria'
+        }
+        widgets = {
+            'name':forms.TextInput(attrs={'class':'form-control'}),
+            'image':forms.FileInput(attrs={'class':'form-control', 'acept':'image/png'}),
+            'max_price':forms.NumberInput(attrs={'class':'form-control'}),
+            'min_price':forms.NumberInput(attrs={'class':'form-control'})
+        }
+
+class OrderStatus(forms.ModelForm):
+    class Meta:
+        model= Order
+        fields = ['status']
+        labels = {
+            'Status'
+            }
+        widget = {
+            'status': forms.Select(attrs={'class':'form-control'})
         }

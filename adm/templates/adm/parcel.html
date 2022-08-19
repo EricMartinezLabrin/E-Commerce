@@ -1,0 +1,36 @@
+{% extends 'adm/base.html' %}
+{% block body %}
+<h1>Paqueterias</h1>
+<a href="{% url 'adm:new_parcel' %}" class="btn btn-success">Crear Nueva</a>
+
+<table class="table table-striped table-hover">
+    <thead>
+        <th>Nombre</th>
+        <th>Precio Minimo</th>
+        <th>Precio Máximo</th>
+        <th>Imagen</th>
+        <th>Acciones</th>
+    </thead>
+    <tbody>
+{% for object  in object_list %}
+<tr>
+    <td>{{object.name}}</td>
+    <td>{{object.min_price}}</td>
+    <td>{{object.max_price}}</td>
+    <td><img src="/media/{{object.image}}" alt="{{object.image}}" width="50"></td>
+    <td>
+        <a href="{% url 'adm:parcel_update' object.id %}"><i class="bi bi-pencil"></i></a>
+        <a href="{% url 'adm:parcel_delete' object.id %}"><i class="bi bi-trash3"></i></a>
+    </td>
+</tr>
+{% empty %}
+<div class="alert alert-danger mt-3" role="alert">
+    No hay Categorias disponibles, puedes crear una haciendo click 
+    <a data-bs-toggle="offcanvas" href="{% url 'adm:products_create' %}" role="button" aria-controls="offcanvasExample" class="alert-link">
+        Aquí
+    </a>
+  </div>
+{% endfor %}
+</tbody>
+</table>
+{% endblock body %}

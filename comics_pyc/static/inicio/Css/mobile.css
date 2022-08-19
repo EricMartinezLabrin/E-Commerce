@@ -14,8 +14,11 @@ html {
 }
 html body{
     background-color: var(--background_body);
-}
 
+}
+body footer div{
+    height: 100vh;
+}
 header{
     background-color: var(--backgroud_header);
     color: var(--text_color);
@@ -31,11 +34,11 @@ div.menu-desktop{
 }
 .cart{
     font-size: 2rem;
-    color: var(--orange_icons)  
+    color: var(--orange_icons);
 }
 .data a i{
     font-size: 3rem;
-    color: var(--orange_icons)
+    color: var(--orange_icons);
 }
 .tittle {
     border-bottom:0.1rem solid var(--text_color);

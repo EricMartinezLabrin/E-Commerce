@@ -96,8 +96,21 @@
               </div>
   
             </div>
-  
+          <hr class="my-4">
+            {% if parcel %}
+            <h4 class="mb-3">Paquetería</h4>
+            <div class="col-md-4">
+              <label for="parcel" class="form-label">Selecciona Metodo de envío</label>
+              {{form_detail.parcel}}
+              <div class="invalid-feedback">
+                Porfavor indicanos un Whats App valido para enviarte informacion importante de tu pedido
+              </div>
+            </div>
+            <span style="font-size:8px">Nota: Independientemente la paqueteria seleccionada, el envío sera por pagar.</span>
+
+
             <hr class="my-4">
+            {% endif %}
     
             <button class="w-100 btn btn-primary btn-lg" type="submit">Continuar para pagar...</button>
           </form>

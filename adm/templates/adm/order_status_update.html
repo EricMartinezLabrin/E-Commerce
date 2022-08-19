@@ -1,0 +1,10 @@
+{% extends 'adm/base.html' %}
+{% block body %}
+<H1>Actualizar estado de Pedido Número {{order}}</H1>
+<form  method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <a href="{% url 'adm:orders' %}" class="btn btn-secondary">Cancelar</a>
+    <input type="submit" class="btn btn-primary" value="Actualizar">
+</form>
+{% endblock body %}

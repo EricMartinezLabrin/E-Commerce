@@ -10,7 +10,7 @@ from django.contrib.auth import authenticate, login
 
 #local
 from .functions import Show
-from adm.models import Banner, Category, Product, Order,UserDetail, Status,Cart
+from adm.models import Banner, Category, Product, Order,UserDetail, Status,Cart,Parcel
 from .cart import CartProcessor
 from adm import forms
 
@@ -114,6 +114,7 @@ class CartView(TemplateView):
 def CheckoutView(request):
     template_name = 'inicio/checkout.html'
     details = User.objects.get(pk=request.user.id)
+    parcel = Parcel.objects.all()
     try:
         form = forms.CreateUserDetail(request.POST or None, instance=details.userdetail)
     except:
@@ -144,7 +145,8 @@ def CheckoutView(request):
         
 
     return render(request,template_name,{
-        'form_detail': form
+        'form_detail': form,
+        'parcel': parcel
     })
 
 def paymentView(request):

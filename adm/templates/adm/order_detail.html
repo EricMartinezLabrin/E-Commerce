@@ -13,7 +13,11 @@
             <p>{{object.creation_date}}</p>
         
             <h5>Estado:</h5>
-            <p class="badge text-bg-{{badge}}">{{object.status}}</p>
+            <div class="d-flex">
+                <p class="badge text-bg-{{badge}}">{{object.status}}</p>
+                <a href="{% url 'adm:orders_status_update' object.id %}" class="ms-3">Cambiar Estado</a>
+            </div>
+            
             <h5>Cliente:</h5>
             <div class="d-flex">
                 <div class="p-3">

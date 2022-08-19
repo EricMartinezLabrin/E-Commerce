@@ -1,9 +1,19 @@
+from unicodedata import name
 from django.db import models
 from django.contrib.auth.models import User
 from django.forms import CharField
 
 class Region(models.Model):
     name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+class Parcel(models.Model):
+    name = models.CharField(max_length=50)
+    image = models.FileField(upload_to="parcel/")
+    max_price = models.IntegerField()
+    min_price = models.IntegerField()
 
     def __str__(self):
         return self.name
@@ -15,6 +25,7 @@ class UserDetail(models.Model):
     interior_number = models.IntegerField()
     comuna = models.CharField(max_length=200)
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
+    parcel = models.ForeignKey(Parcel, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.user.username
@@ -79,6 +90,7 @@ class Order(models.Model):
     total = models.IntegerField()
     customer = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.ForeignKey(Status,on_delete=models.CASCADE)
+    parcel = models.ForeignKey(Parcel, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return str(self.id)

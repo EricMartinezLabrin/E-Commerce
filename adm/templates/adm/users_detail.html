@@ -1,0 +1,25 @@
+{% extends 'adm/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block body %}
+{% if object.first_name %}
+<h1>{{object.first_name}} {{object.last_name}}</h1>
+{% else %}
+<h1>{{object.username}}</h1>
+{% endif %}
+<a href="{% url 'adm:orders' %}" class="btn btn-warning">Volver</a>
+
+<div>
+        <h2>General</h2>
+        <h5>Nombre:</h5>
+        <p>{{object}} {{object.user.last_name}}</p>
+        
+        <h5>Teléfono:</h5>
+        <p>{{object.user.userdetail.phone}}</p>
+        <h5>E-Mail:</h5>
+        <p>{{object.user.email}}</p>
+</div>
+
+
+
+{% endblock body %}
