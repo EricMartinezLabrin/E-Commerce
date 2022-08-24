@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
 #Local
-from .models import Banner,Category,SubCategory,Product,UserDetail, Parcel, Order
+from .models import Banner,Category,SubCategory,Product,UserDetail, Parcel, Order, Settings
 
 
 class AddNewBanner(forms.ModelForm):
@@ -120,4 +120,34 @@ class OrderStatus(forms.ModelForm):
             }
         widget = {
             'status': forms.Select(attrs={'class':'form-control'})
+        }
+
+class SettingsForm(forms.ModelForm):
+    class Meta:
+        model= Settings
+        fields = '__all__'
+        labels = {
+            'name': 'Nombre de la Empresa',
+            'address': 'Dirección Empresa',
+            'phone': 'Teléfono Empresa',
+            'email': 'E-Mail Empresa',
+            'logo': 'Logotipo'
+        }
+        widgets={
+            'name': forms.TextInput(attrs={'class':'form-control'}),
+            'address': forms.TextInput(attrs={'class':'form-control'}),
+            'phone': forms.NumberInput(attrs={'class':'form-control'}),
+            'email': forms.EmailInput(attrs={'class':'form-control'}),
+            'logo': forms.FileInput(attrs={'class':'form-control', 'acept':'image/png'})
+        }
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username','first_name','last_name','email']
+        widgets={
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+            'first_name': forms.TextInput(attrs={'class':'form-control'}),
+            'last_name': forms.TextInput(attrs={'class':'form-control'}),
+            'email': forms.EmailInput(attrs={'class':'form-control'})
         }

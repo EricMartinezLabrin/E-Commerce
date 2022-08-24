@@ -6,12 +6,13 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic.base import TemplateView
 from django.views.generic import CreateView,UpdateView,DetailView,DeleteView, ListView
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.contrib.auth.views import redirect_to_login
+from django.contrib.auth.views import redirect_to_login, PasswordChangeView, PasswordChangeDoneView
 from django.contrib.auth.models import User
+from django.contrib.auth import views as auth_views
 
 #Local
-from .models import Banner,Category,SubCategory, Product, Cart, Order, Parcel, UserDetail, Region
-from .forms import AddNewBanner, AddCategory, AddSubCategory, AddProduct, CreateParcel, OrderStatus
+from .models import Banner,Category,SubCategory, Product, Cart, Order, Parcel, UserDetail, Region, Settings
+from .forms import AddNewBanner, AddCategory, AddSubCategory, AddProduct, CreateParcel, OrderStatus, SettingsForm, ProfileForm
 from comics_pyc.functions import Show
 
 class UserAccessMixin(PermissionRequiredMixin):
@@ -24,14 +25,112 @@ class UserAccessMixin(PermissionRequiredMixin):
             return redirect('login')
         return super(UserAccessMixin, self).dispatch(request,*args,*kwargs)
 
+class ProfileDetailView(PermissionRequiredMixin, DetailView):
+    permission_required = "is_staff"
+    template_name = 'adm/profile.html'
+    model = User
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_settings'] = Show.settings_data()
+        return context
+
+class ProfileUpdateBasicView(PermissionRequiredMixin,UpdateView):
+    model = User
+    success_url = reverse_lazy('adm:profile')
+    template_name = 'adm/settings_update.html'
+    form_class = ProfileForm
+    permission_required = 'is_staff'
+    success_url = reverse_lazy('adm:profile_updated')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_settings'] = Show.settings_data()
+        return context
+class ProfileUpdatedView(PermissionRequiredMixin, TemplateView):
+    template_name = 'adm/profile_updated.html'
+    permission_required = 'is_staff'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_settings'] = Show.settings_data()
+        return context
+
+class ProfileUpdateOtherView(PermissionRequiredMixin,UpdateView):
+    pass
+
+class PasswordChangeView(PermissionRequiredMixin, PasswordChangeView):
+    template_name = 'adm/password_change_form.html'
+    permission_required = "is_staff"
+    success_url = reverse_lazy('adm:password_change_done')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_settings'] = Show.settings_data()
+        return context
+
+class PasswordChangeDoneView(PasswordChangeDoneView):
+    permission_required = "is_staff"
+    template_name = 'adm/password_change_done.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_settings'] = Show.settings_data()
+        return context
+
+class SettingsView(UserAccessMixin,TemplateView):
+    permission_required = "is_staff"
+    model = Settings
+    template_name = 'adm/settings.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['object'] = Settings.objects.get(pk=1)
+        context['data_settings'] = Show.settings_data()
+        return context
+
+class SettingsCreateView(UserAccessMixin,CreateView):
+    permission_required = "is_staff"
+    model = Settings
+    form_class = SettingsForm
+    template_name = 'adm/settings_create.html'
+    success_url = reverse_lazy('adm:settings')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_settings'] = Show.settings_data()
+        return context
+
+class SettingsUpdateView(UserAccessMixin,UpdateView):
+    permission_required = "is_staff"
+    model = Settings
+    form_class = SettingsForm
+    template_name = 'adm/settings_update.html'
+    success_url = reverse_lazy('adm:settings')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_settings'] = Show.settings_data()
+        return context
+
 class IndexView(UserAccessMixin,TemplateView):
     template_name = 'adm/index.html'
     permission_required = 'is_staff'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_settings'] = Show.settings_data()
+        return context
 
 class ParcelView(UserAccessMixin,ListView):
     permission_required = 'is_staff'
     template_name = 'adm/parcel.html'
     model = Parcel
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_settings'] = Show.settings_data()
+        return context
 
 class NewParcelView(UserAccessMixin,CreateView):
     permission_required = 'is_staff'
@@ -40,6 +139,11 @@ class NewParcelView(UserAccessMixin,CreateView):
     form_class = CreateParcel
     success_url = reverse_lazy('adm:parcel')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_settings'] = Show.settings_data()
+        return context
+
 class ParcelUpdateView(UserAccessMixin,UpdateView):
     permission_required = 'is_staff'
     template_name = 'adm/parcel_update.html'
@@ -47,10 +151,20 @@ class ParcelUpdateView(UserAccessMixin,UpdateView):
     form_class = CreateParcel
     success_url = reverse_lazy('adm:parcel')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_settings'] = Show.settings_data()
+        return context
+
 class ParcelDeleteView(UserAccessMixin,DeleteView):
     permission_required = 'is_staff'
     model = Parcel
     success_url = reverse_lazy('adm:parcel')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_settings'] = Show.settings_data()
+        return context
 
 class AdsView(UserAccessMixin,TemplateView):
     template_name = 'adm/ads.html'
@@ -103,6 +217,7 @@ class CategoryView(UserAccessMixin,TemplateView):
         context['subcategories']=CategoryView.find_subcategories()
         context['form']=self.form_category
         context['form_subcategory']=self.form_subcategory
+        context['data_settings'] = Show.settings_data()
         return context
 
 class CategoryUpdateView(UserAccessMixin,UpdateView):
@@ -112,11 +227,21 @@ class CategoryUpdateView(UserAccessMixin,UpdateView):
     success_url = reverse_lazy('adm:category')
     permission_required = 'is_staff'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_settings'] = Show.settings_data()
+        return context
+
 class CategoryDeleteView(UserAccessMixin,DeleteView):
     model = Category
     template_name = "adm/category_delete.html"
     success_url = reverse_lazy('adm:category')
     permission_required = 'is_staff'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_settings'] = Show.settings_data()
+        return context
 
 def Category_Create(request):
     if request.method == "POST":
@@ -137,7 +262,10 @@ def CategoryBanner(request,pk):
     template_name = 'adm/modal_preview_category.html'
     banner_category = CategoryView.find_categories(id=pk)
 
-    return render(request,template_name,{'banner_category':banner_category})
+    return render(request,template_name,{
+        'banner_category':banner_category,
+        'data_settings' : Show.settings_data
+        })
 
 def SubCategory_Create(request):
     if request.method == "POST":
@@ -164,11 +292,21 @@ class SubCategoryUpdateView(UserAccessMixin,UpdateView):
     success_url = reverse_lazy('adm:category')
     permission_required = 'is_staff'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_settings'] = Show.settings_data()
+        return context
+
 class SubCategoryDeleteView(UserAccessMixin,DeleteView):
     model = SubCategory
     template_name = "adm/category_delete.html"
     success_url = reverse_lazy('adm:category')
     permission_required = 'is_staff'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_settings'] = Show.settings_data()
+        return context
 
 class ProductView(UserAccessMixin,ListView):
     model = Product
@@ -176,12 +314,22 @@ class ProductView(UserAccessMixin,ListView):
     paginate_by = 20
     permission_required = 'is_staff'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_settings'] = Show.settings_data()
+        return context
+
 class CreateProductView(UserAccessMixin,CreateView):
     model = Product
     form_class = AddProduct
     template_name = "adm/product_create.html"
     success_url = reverse_lazy('adm:products')
     permission_required = 'is_staff'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_settings'] = Show.settings_data()
+        return context
 
 def UpdateProduct(request,pk):
     product = Product.objects.get(pk=pk)
@@ -209,7 +357,8 @@ def UpdateProduct(request,pk):
             return HttpResponseRedirect(reverse_lazy("adm:products"))
     else:
         return render(request,"adm/product_update.html",{
-            'form': form
+            'form': form,
+            'data_settings' : Show.settings_data
         })
 
 class OrdersView(UserAccessMixin,ListView):
@@ -222,6 +371,7 @@ class OrdersView(UserAccessMixin,ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['badge'] = 'success'
+        context['data_settings'] = Show.settings_data()
         return context
 
 class OrdersDetailView(UserAccessMixin,DetailView):
@@ -237,6 +387,7 @@ class OrdersDetailView(UserAccessMixin,DetailView):
         context = super().get_context_data(**kwargs)
         context['products'] = OrdersDetailView.get_products(self)
         context['badge'] = Show.show_status_color(self.kwargs['pk'])
+        context['data_settings'] = Show.settings_data()
         return context
 
 class OrdersStatusUpdateView(UserAccessMixin,UpdateView):
@@ -249,6 +400,7 @@ class OrdersStatusUpdateView(UserAccessMixin,UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['order'] = self.kwargs['pk']
+        context['data_settings'] = Show.settings_data()
         return context
 
 class OrderDeleteView(UserAccessMixin,DeleteView):
@@ -256,6 +408,11 @@ class OrderDeleteView(UserAccessMixin,DeleteView):
     model = Order
     template_name = "adm/order_delete.html"
     success_url = reverse_lazy('adm:orders')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_settings'] = Show.settings_data()
+        return context
  
 class UsersView(UserAccessMixin,ListView):
     permission_required = 'is_staff'
@@ -263,11 +420,21 @@ class UsersView(UserAccessMixin,ListView):
     template_name = 'adm/users.html'
     paginate_by = 20
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_settings'] = Show.settings_data()
+        return context
+
 class UsersDeleteView(UserAccessMixin,DeleteView):
     permission_required = 'is_staff'
     model = User
     template_name = "adm/users_delete.html"
     success_url = reverse_lazy('adm:users')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_settings'] = Show.settings_data()
+        return context
 
 def UserDetailView(request,pk):
     permission_required = 'is_staff'
@@ -283,6 +450,7 @@ def UserDetailView(request,pk):
     template_name = 'adm/users_detail.html'
 
     return render(request,template_name,{
-        'object': model
+        'object': model,
+        'data_settings' : Show.settings_data
     })
 

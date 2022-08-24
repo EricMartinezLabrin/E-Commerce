@@ -2,12 +2,21 @@
 from django.urls import path
 from django.contrib.auth.decorators import login_required
 
+
 from . import views
 
 app_name = "adm"
 urlpatterns = [
     #extension: /adm/
     path("", login_required(views.IndexView.as_view()), name ="index"),
+    path("profile/<int:pk>", login_required(views.ProfileDetailView.as_view()), name ="profile"),
+    path("profile/update/<int:pk>", login_required(views.ProfileUpdateBasicView.as_view()), name ="profile_update"),
+    path('profile/password_change/',login_required(views.PasswordChangeView.as_view()), name='password_change'),
+    path('profile/password-change/done/', login_required(views.PasswordChangeDoneView.as_view()), name='password_change_done'),
+    path("profile/update/done", login_required(views.ProfileUpdatedView.as_view()), name ="profile_updated"),
+    path("settings", login_required(views.SettingsView.as_view()), name ="settings"),
+    path("settings/create", login_required(views.SettingsCreateView.as_view()), name ="settings_create"),
+    path("settings/update/<int:pk>", login_required(views.SettingsUpdateView.as_view()), name ="settings_update"),
     path("ads", login_required(views.AdsView.as_view()), name ="ads"),
     path("parcel", login_required(views.ParcelView.as_view()), name ="parcel"),
     path("parcel/update/<int:pk>", login_required(views.ParcelUpdateView.as_view()), name ="parcel_update"),

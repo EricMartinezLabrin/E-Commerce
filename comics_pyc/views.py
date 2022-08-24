@@ -35,15 +35,23 @@ def CreateUser(request):
             return HttpResponse("No hemos recibido información, porfavor contactate con el administrador. (Formulario no Válido)")
     else:
         return render(request,'inicio/register.html',{
-            'form': form
+            'form': form,
+            'data_settings': Show.settings_data()
         })
 
 class LoginView(LoginView):
     template_name = 'inicio/login.html'
     model = User
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_settings'] = Show.settings_data()
+        return context
 
 class Logout(LogoutView):
-    pass
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_settings'] = Show.settings_data()
+        return context
 
 class IndexView(TemplateView):
     template_name = 'inicio/index.html'
@@ -74,6 +82,7 @@ class IndexView(TemplateView):
         context['banner'] = IndexView.show_banner()
         context['categories'] = IndexView.show_category()
         context['products'] = IndexView.show_product()
+        context['data_settings'] = Show.settings_data()
         return context
 
 class AllProductsView(ListView):
@@ -83,6 +92,7 @@ class AllProductsView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['categories'] = IndexView.show_category()
+        context['data_settings'] = Show.settings_data()
         return context
 
 class CategoriesView(DetailView):
@@ -97,11 +107,16 @@ class CategoriesView(DetailView):
         context = super().get_context_data(**kwargs)
         context['products'] = self.show_products()
         context['categories'] = IndexView.show_category()
+        context['data_settings'] = Show.settings_data()
         return context
 
 class DetailView(DetailView):
     template_name = 'inicio/details.html'
     model = Product
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_settings'] = Show.settings_data()
+        return context
 
 class CartView(TemplateView):
     template_name = 'inicio/cart.html'
@@ -109,6 +124,7 @@ class CartView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["categories"] = IndexView.show_category()
+        context['data_settings'] = Show.settings_data()
         return context
           
 def CheckoutView(request):
@@ -131,7 +147,8 @@ def CheckoutView(request):
                 user_details.save()
                 return HttpResponseRedirect(reverse('payment'))
         return render(request,template_name,{
-            'form_detail':form
+            'form_detail':form,
+            'data_settings': Show.settings_data()
         })
 
     if request.method == 'POST':
@@ -140,13 +157,15 @@ def CheckoutView(request):
             return HttpResponseRedirect(reverse('payment'))
         else:
             return render(request,'inicio/failed.html',{
-                'error': form
+                'error': form,
+                'data_settings': Show.settings_data()
             })
         
 
     return render(request,template_name,{
         'form_detail': form,
-        'parcel': parcel
+        'parcel': parcel,
+        'data_settings': Show.settings_data()
     })
 
 def paymentView(request):
@@ -181,14 +200,23 @@ def paymentView(request):
         request.session.modified=True
 
         return render(request,template_name,{
-        'order': order_id
+        'order': order_id,
+        'data_settings': Show.settings_data()
     })
 
 class SuccessfullyView(TemplateView):
     template_name = 'inicio/successfully.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_settings'] = Show.settings_data()
+        return context
 
 class FailedView(TemplateView):
     template_name = 'inicio/failed.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_settings'] = Show.settings_data()
+        return context
 
 def addCart(request,product_id):
     cart = CartProcessor(request)

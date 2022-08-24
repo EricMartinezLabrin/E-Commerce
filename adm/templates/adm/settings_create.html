@@ -1,0 +1,10 @@
+{% extends 'adm/base.html' %}
+{% block body %}
+<h1>Crear Empresa</h1>
+<form method="post" enctype="multipart/form-data">
+{% csrf_token %}
+{{form.as_p}}
+<input type="submit" value="Crear" class="btn btn-primary">
+<a href="{% url 'adm:settings' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock body %}

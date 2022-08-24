@@ -104,3 +104,14 @@ class Cart(models.Model):
 
     def __str__(self):
         return str(self.order)
+
+class Settings(models.Model):
+    name = models.CharField(default='My Business', max_length=50)
+    address = models.CharField(default='My Address', max_length=255)
+    phone = models.IntegerField(default=0)
+    email = models.EmailField(default='contacto@mybusiness.com')
+    logo = models.FileField(upload_to="settings/")
+
+    def __str__(self):
+        return self.name
+

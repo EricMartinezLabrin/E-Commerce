@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 
-from adm.models import Order
+from adm.models import Order, Settings
 
 
 class Show():
@@ -16,3 +16,7 @@ class Show():
         if status == 2: #Pagado
             badge = 'success'
         return badge
+
+    def settings_data():
+        data = Settings.objects.get(pk=1)
+        return data
