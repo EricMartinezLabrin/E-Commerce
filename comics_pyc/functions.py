@@ -18,5 +18,8 @@ class Show():
         return badge
 
     def settings_data():
-        data = Settings.objects.get(pk=1)
+        try:
+            data = Settings.objects.get(pk=1)
+        except:
+            data = ''
         return data

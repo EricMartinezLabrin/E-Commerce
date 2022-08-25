@@ -47,6 +47,7 @@ class ProfileUpdateBasicView(PermissionRequiredMixin,UpdateView):
         context = super().get_context_data(**kwargs)
         context['data_settings'] = Show.settings_data()
         return context
+
 class ProfileUpdatedView(PermissionRequiredMixin, TemplateView):
     template_name = 'adm/profile_updated.html'
     permission_required = 'is_staff'
@@ -82,10 +83,15 @@ class SettingsView(UserAccessMixin,TemplateView):
     permission_required = "is_staff"
     model = Settings
     template_name = 'adm/settings.html'
+    
+    try:
+        settings = Settings.objects.get(pk=1)
+    except:
+        settings = ''
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['object'] = Settings.objects.get(pk=1)
+        context['object'] = settings
         context['data_settings'] = Show.settings_data()
         return context
 
