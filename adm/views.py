@@ -91,7 +91,7 @@ class SettingsView(UserAccessMixin,TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['object'] = settings
+        context['object'] = self.settings
         context['data_settings'] = Show.settings_data()
         return context
 
