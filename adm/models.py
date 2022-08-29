@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.forms import CharField
 
 class Region(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=51)
 
     def __str__(self):
         return self.name
@@ -26,6 +26,7 @@ class UserDetail(models.Model):
     comuna = models.CharField(max_length=200)
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
     parcel = models.ForeignKey(Parcel, on_delete=models.CASCADE, null=True)
+    image = models.FileField(upload_to="profile/", null=True, blank=True)
 
     def __str__(self):
         return self.user.username

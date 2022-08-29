@@ -3,4 +3,28 @@
 <h1>Pago Correcto</h1>
 {{error}}
 {{order}}
+
+{% comment %} // SDK MercadoPago.js V2 {% endcomment %}
+<script src="https://sdk.mercadopago.com/js/v2"></script>
+{{preference}}
+
+<div class="cho-container"></div>
+<script>
+  const mp = new MercadoPago('TEST-475c9832-3e61-4ee5-a836-eca12f932bb6', {
+    locale: 'es-CL'
+  });
+
+  mp.checkout({
+    preference: {
+      id: '{{preference.id}}'
+    },
+    render: {
+      container: '.cho-container',
+      label: 'Pagar',
+    }
+  });
+</script>
+
+
+
 {% endblock %}

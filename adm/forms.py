@@ -1,4 +1,5 @@
 #Django
+from turtle import textinput
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -80,6 +81,19 @@ class CreateUser(UserCreationForm):
         model = User
         fields = ['first_name','last_name','email','username','password1','password2']
 
+class CreateUser2(UserCreationForm):
+    
+    class Meta:
+        model = User
+        fields = ['username','email','password1','password2','is_staff']
+
+        widgets = {
+            'email':forms.TextInput(attrs={'class':'form-control m-2'}),
+            'username':forms.TextInput(attrs={'class':'form-control m-2'}),
+            'password1':forms.PasswordInput(attrs={'class':'form-control m-2'}),
+            'password2':forms.PasswordInput(attrs={'class':'form-control m-2'})
+        }
+
 class CreateUserDetail(forms.ModelForm):
 
     class Meta:
@@ -150,4 +164,18 @@ class ProfileForm(forms.ModelForm):
             'first_name': forms.TextInput(attrs={'class':'form-control'}),
             'last_name': forms.TextInput(attrs={'class':'form-control'}),
             'email': forms.EmailInput(attrs={'class':'form-control'})
+        }
+
+class ProfileDetailForm(forms.ModelForm):
+    class Meta:
+        model = UserDetail
+        fields = ['phone','address','interior_number','comuna','region','parcel','image']
+        widgets = {
+            'phone': forms.NumberInput(attrs={'class':'form-control'}),
+            'address': forms.TextInput(attrs={'class':'form-control'}),
+            'interior_number': forms.NumberInput(attrs={'class':'form-control'}),
+            'comuna': forms.TextInput(attrs={'class':'form-control'}),
+            'region': forms.Select(attrs={'class':'form-control'}),
+            'parcel':forms.Select(attrs={'class':'form-control'}),
+            'image': forms.FileInput(attrs={'class':'form-control', 'acept':'image/png'})
         }

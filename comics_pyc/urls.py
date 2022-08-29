@@ -40,8 +40,9 @@ urlpatterns = [
     path('cart/decrement/<int:product_id>', views.decrementCart, name='decrement'),
     path('checkout/', login_required(views.CheckoutView), name='checkout'),
     path('checkout/payment', login_required(views.paymentView), name='payment'),
-    path('checkout/successfully', login_required(views.SuccessfullyView.as_view()), name="successfully"),
+    path('checkout/successfully', login_required(views.SuccessfullyView), name="successfully"),
     path('checkout/failed', login_required(views.FailedView.as_view()), name="failed"),
+    path('orders', login_required(views.OrdersView.as_view()), name="orders"),
 
 ]
 

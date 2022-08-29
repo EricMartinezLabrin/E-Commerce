@@ -12,7 +12,7 @@ from django.contrib.auth import views as auth_views
 
 #Local
 from .models import Banner,Category,SubCategory, Product, Cart, Order, Parcel, UserDetail, Region, Settings
-from .forms import AddNewBanner, AddCategory, AddSubCategory, AddProduct, CreateParcel, OrderStatus, SettingsForm, ProfileForm
+from .forms import AddNewBanner, AddCategory, AddSubCategory, AddProduct, CreateParcel, OrderStatus, SettingsForm, ProfileDetailForm, ProfileForm, CreateUser2
 from comics_pyc.functions import Show
 
 class UserAccessMixin(PermissionRequiredMixin):
@@ -57,8 +57,37 @@ class ProfileUpdatedView(PermissionRequiredMixin, TemplateView):
         context['data_settings'] = Show.settings_data()
         return context
 
+def CheckProfile(request, pk):
+    try:
+        UserDetail.objects.get(pk=pk)
+        return HttpResponseRedirect(reverse('adm:profile_update_others', args=(pk,)))
+    except UserDetail.DoesNotExist:
+        user = User.objects.get(pk=pk)
+        try:
+            region = Region.objects.get(pk=1)
+        except Region.DoesNotExist:
+            Region.objects.create(name="")
+            region = Region.objects.get(pk=1)
+        
+        try:
+            parcel = Parcel.objects.get(pk=1)
+        except Parcel.DoesNotExist:
+            Parcel.objects.create(name="")
+            parcel = Parcel.objects.get(pk=1)
+        UserDetail.objects.create(user=user, interior_number=0, region=region, parcel=parcel)
+        return HttpResponseRedirect(reverse('adm:profile_update_others', args=(pk,)))
+
 class ProfileUpdateOtherView(PermissionRequiredMixin,UpdateView):
-    pass
+    permission_required = 'is_staff'
+    model = UserDetail
+    form_class = ProfileDetailForm
+    template_name = 'adm/settings_update.html'
+    success_url = reverse_lazy('adm:profile_updated')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_settings'] = Show.settings_data()
+        return context
 
 class PasswordChangeView(PermissionRequiredMixin, PasswordChangeView):
     template_name = 'adm/password_change_form.html'
@@ -172,13 +201,38 @@ class ParcelDeleteView(UserAccessMixin,DeleteView):
         context['data_settings'] = Show.settings_data()
         return context
 
-class AdsView(UserAccessMixin,TemplateView):
+class AdsView(UserAccessMixin,ListView):
     template_name = 'adm/ads.html'
     permission_required = 'is_staff'
+    model = Banner
     form = AddNewBanner
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form']=self.form
+        context['data_settings'] = Show.settings_data()
+        return context
+
+class BannerUpdateView(UserAccessMixin,UpdateView):
+    template_name = 'adm/ads_update.html'
+    permission_required= 'is_staff'
+    model = Banner
+    form_class = AddNewBanner
+    success_url = reverse_lazy('adm:ads')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_settings'] = Show.settings_data()
+        return context
+
+class BannerDeleteView(UserAccessMixin, DeleteView):
+    template_name = 'adm/banner_delete.html'
+    model = Banner
+    success_url = reverse_lazy('adm:ads')
+    permission_required = 'is_staff'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_settings'] = Show.settings_data()
         return context
 
 def UploadBanner(request):
@@ -460,3 +514,24 @@ def UserDetailView(request,pk):
         'data_settings' : Show.settings_data
     })
 
+def UsersCreateView(request):
+    if request.method == 'POST':
+        form = CreateUser2(request.POST)
+        if form.is_valid():
+
+            username = form.cleaned_data['username']
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password2']
+            is_staff = form.cleaned_data['is_staff']
+
+            user = User.objects.create_user(username,email,password)
+            user.is_staff = is_staff
+            user.save()
+            return HttpResponseRedirect(reverse_lazy('adm:users'))
+    else:
+        form = CreateUser2
+        template_name = 'adm/users_create.html'
+        return render(request,template_name,{
+            'form':form,
+            'data_settings' : Show.settings_data
+        })

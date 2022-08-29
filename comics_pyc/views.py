@@ -14,6 +14,9 @@ from adm.models import Banner, Category, Product, Order,UserDetail, Status,Cart,
 from .cart import CartProcessor
 from adm import forms
 
+#Otro
+import mercadopago
+
 def CreateUser(request):
     form = forms.CreateUser(request.POST or None)
     if request.method == 'POST':
@@ -199,13 +202,35 @@ def paymentView(request):
         request.session['cart_quantity'] = 0
         request.session.modified=True
 
+        # SDK de Mercado Pago
+
+        # Agrega credenciales
+        sdk = mercadopago.SDK("TEST-1816279427628496-082518-84255c0be73596985adaf2dccacaeee1-113262566")
+
+
+        # Crea un ítem en la preferencia
+        preference_data = {
+            "items": [
+                {
+                    "title": "Mi producto",
+                    "quantity": 1,
+                    "unit_price": 75
+                }
+            ]
+        }
+
+        preference_response = sdk.preference().create(preference_data)
+        preference = preference_response["response"]
+
         return render(request,template_name,{
         'order': order_id,
-        'data_settings': Show.settings_data()
+        'data_settings': Show.settings_data(),
+        'preference': preference
     })
 
 class SuccessfullyView(TemplateView):
     template_name = 'inicio/successfully.html'
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['data_settings'] = Show.settings_data()
@@ -235,3 +260,13 @@ def decrementCart(request,product_id):
     product = Product.objects.get(pk=product_id)
     cart.decrement(product)  
     return HttpResponseRedirect(reverse("cart"))
+
+class OrdersView(ListView):
+    model = Order
+    template_name = 'inicio/orders.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_settings'] = Show.settings_data()
+        return context
+

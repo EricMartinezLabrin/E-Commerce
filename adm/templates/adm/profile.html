@@ -30,9 +30,9 @@
 </p>
 <p>
     <span><b>Foto de Perfil:</b></span> 
-    
+    <img src="/media/{{object.userdetail.image}}" alt="Foto de {{object.username}}" width="150">
 </p>
-{% comment %} <a href="{% url 'adm:profile_update' request.user.id %}" class="btn btn-primary">Editar</a> {% endcomment %}
+<a href="{% url 'adm:check_details' request.user.id %}" class="btn btn-primary">Editar Detalles</a>
 <hr class="my-4">
 <a href="{% url 'adm:password_change' %}" class="btn btn-primary">Cambiar Contraseña</a>
 
