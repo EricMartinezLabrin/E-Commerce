@@ -1,0 +1,11 @@
+{% extends 'adm/base.html' %}
+{% block body %}
+<h1>Editar {{object.name}}</h1>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="Editar" class="btn btn-primary">
+</form>
+
+{% endblock body %}
