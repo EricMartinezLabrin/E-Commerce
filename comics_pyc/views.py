@@ -261,12 +261,19 @@ def decrementCart(request,product_id):
     cart.decrement(product)  
     return HttpResponseRedirect(reverse("cart"))
 
-class OrdersView(ListView):
+def OrdersView(request,pk):
     model = Order
     template_name = 'inicio/orders.html'
+    data_settings = Show.settings_data()
+    customer = User.objects.get(pk=pk)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['data_settings'] = Show.settings_data()
-        return context
+    try:
+        object_list = Order.objects.filter(customer=customer)
+    except Order.DoesNotExist:
+        object_list = None
+
+    return render(request,template_name,{
+        'object_list':object_list,
+        'data_settings':data_settings
+    })
 

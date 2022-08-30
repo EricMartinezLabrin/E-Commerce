@@ -56,7 +56,7 @@
                 {% if user.is_staff == True %}
                 <li><a class="dropdown-item" href="{% url 'adm:index' %}">Administración</a></li>
                 {% endif %}
-                <li><a class="dropdown-item" href="{% url 'orders' %}">Mis Compras</a></li>
+                <li><a class="dropdown-item" href="{% url 'orders' request.user.id %}">Mis Compras</a></li>
                 <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar Sesión</a></li>
               </ul>
             </div>
