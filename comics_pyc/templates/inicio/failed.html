@@ -1,6 +1,20 @@
 {% extends 'inicio/base.html' %}
 {% block body %}
-<h1>El pago fue rechazado</h1>
+<h1>Pago Fallido</h1>
 
-{{error}}
-{% endblock body %}
+<div class="product p-3">
+  <h5 style="color:red">Lamentablemente el cobro no se a podido realizar, puedes volver a intentarlo</h5>
+  <br>
+  <h3>Detalles del Pedido</h3>
+  <br>
+  <p><span>Número de pedido:</span> {{external_reference}}</p>
+  <p><span>Status:</span> {{status}}</p>
+  <p><span>Forma de Pago:</span> {{payment_type}}</p>
+  <p><span>Comprobante de pago:</span> {{merchant_order_id}}</p>
+  <hr>
+  Puedes ver el estado de tu pedido <a href="{% url 'orders' user.id %}">aquí</a>
+</div>
+
+
+
+{% endblock %}

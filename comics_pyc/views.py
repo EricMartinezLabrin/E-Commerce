@@ -242,6 +242,7 @@ def paymentView(request):
             "pending": "http://127.0.0.1:8000/checkout/pending"
         },
         "auto_return": "approved",
+        "notification_url":"https://webhook.site/026918ad-b8c7-428a-b2ac-a169308075d1",
         "statement_descriptor": "IKIGAIMANGA",
         "external_reference": str(order_id.id),
         }
@@ -272,12 +273,39 @@ def SuccessfullyView(request):
         'data_settings':data_settings
     })
 
-class FailedView(TemplateView):
+def FailedView(request):
     template_name = 'inicio/failed.html'
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['data_settings'] = Show.settings_data()
-        return context
+    data_settings = Show.settings_data()
+    merchant_order_id = request.GET['merchant_order_id']
+    payment_type = request.GET['payment_type']
+    status = request.GET['status']
+    external_reference = request.GET['external_reference']
+    
+    return render(request,template_name,{
+        'merchant_order_id': merchant_order_id,
+        'payment_type': payment_type,
+        'status': status,
+        'status': status,
+        'external_reference': external_reference,
+        'data_settings':data_settings
+    })
+
+def PendingView(request):
+    template_name = 'inicio/pending.html'
+    data_settings = Show.settings_data()
+    merchant_order_id = request.GET['merchant_order_id']
+    payment_type = request.GET['payment_type']
+    status = request.GET['status']
+    external_reference = request.GET['external_reference']
+    
+    return render(request,template_name,{
+        'merchant_order_id': merchant_order_id,
+        'payment_type': payment_type,
+        'status': status,
+        'status': status,
+        'external_reference': external_reference,
+        'data_settings':data_settings
+    })
 
 def addCart(request,product_id):
     cart = CartProcessor(request)

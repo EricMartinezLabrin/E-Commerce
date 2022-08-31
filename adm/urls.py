@@ -47,6 +47,7 @@ urlpatterns = [
     path("users/new", login_required(views.UsersCreateView), name ="new_user"),
     path("users/delete/<int:pk>", login_required(views.UsersDeleteView.as_view()), name ="users_delete"),
     path("users/detail/<int:pk>", login_required(views.UserDetailView), name ="users_detail"),
+    path("payment/mercadopago", views.MercadoPagoView, name ="mercadopago"),
 
 
 ]

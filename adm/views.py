@@ -1,6 +1,6 @@
 #Django
 from contextlib import redirect_stderr
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render,redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic.base import TemplateView
@@ -11,9 +11,14 @@ from django.contrib.auth.models import User
 from django.contrib.auth import views as auth_views
 
 #Local
-from .models import Banner,Category,SubCategory, Product, Cart, Order, Parcel, UserDetail, Region, Settings
+from .models import Banner,Category,SubCategory, Product, Cart, Order, Parcel, UserDetail, Region, Settings, Status
 from .forms import AddNewBanner, AddCategory, AddSubCategory, AddProduct, CreateParcel, OrderStatus, SettingsForm, ProfileDetailForm, ProfileForm, CreateUser2
 from comics_pyc.functions import Show
+from comics_pyc.credentials import Credentials
+
+#python
+import requests
+import json
 
 class UserAccessMixin(PermissionRequiredMixin):
     def dispatch(self, request, *args, **kwargs):
@@ -535,3 +540,42 @@ def UsersCreateView(request):
             'form':form,
             'data_settings' : Show.settings_data
         })
+
+def MercadoPagoView(request):
+    id = request.GET['id']
+    url = 'https://api.mercadopago.com/v1/payments/'+id
+    json_data = {}
+    headers = {'Content-Type': 'application/json','Authorization': token}
+    token = Credentials.mercadopago()
+    response = requests.post(url, data=json.dumps(json_data),headers=headers)
+
+    data=response.json()
+
+    order_id = data['external_reference']
+    status = data['payments']['status']
+
+    if status == 'approved':
+        status_id = 2
+    elif status == 'pending':
+        status_id = 1
+    elif status == 'authorized':
+        status_id = 1
+    elif status == 'in_process':
+        status_id = 7
+    elif status == 'in_mediation':
+        status_id = 8
+    elif status == 'rejected':
+        status_id = 5
+    elif status == 'cancelled':
+        status_id = 9
+    elif status == 'refunded':
+        status_id = 6
+    elif status == 'charged_back':
+        status_id = 10
+    
+    status_instance = Status.objects.get(pk=status_id)
+    order = Order.objects.get(pk=order_id)
+    order.status = status_instance
+    order.save()
+
+    return HttpResponse()

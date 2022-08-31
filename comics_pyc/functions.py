@@ -29,6 +29,10 @@ class Show():
             Status.objects.create(name='Enviado')
             Status.objects.create(name='Pago Fallido')
             Status.objects.create(name='Reembolsado')
+            Status.objects.create(name='En Revisión')
+            Status.objects.create(name='Cliente Solicitó Reembolso')
+            Status.objects.create(name='Cancelado')
+            Status.objects.create(name='Banco Solicitó Reembolso')
 
         try:
             Region.objects.get(pk=2)

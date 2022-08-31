@@ -41,7 +41,8 @@ urlpatterns = [
     path('checkout/', login_required(views.CheckoutView), name='checkout'),
     path('checkout/payment', login_required(views.paymentView), name='payment'),
     path('checkout/successfully', login_required(views.SuccessfullyView), name="successfully"),
-    path('checkout/failed', login_required(views.FailedView.as_view()), name="failed"),
+    path('checkout/failed', login_required(views.FailedView), name="failed"),
+    path('checkout/pending', login_required(views.PendingView), name="pending"),
     path('orders/<int:pk>', login_required(views.OrdersView), name="orders"),
 ]
 
