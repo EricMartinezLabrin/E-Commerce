@@ -13,6 +13,7 @@ from .functions import Show
 from adm.models import Banner, Category, Product, Order,UserDetail, Status,Cart,Parcel
 from .cart import CartProcessor
 from adm import forms
+from .credentials import Credentials
 
 #Otro
 import mercadopago
@@ -220,7 +221,7 @@ def paymentView(request):
             items.append(block)
 
         # Agrega credenciales
-        sdk = mercadopago.SDK("TEST-1816279427628496-082518-84255c0be73596985adaf2dccacaeee1-113262566")
+        sdk = mercadopago.SDK(Credentials.mercadopago())
 
 
         # Crea un ítem en la preferencia
@@ -237,12 +238,12 @@ def paymentView(request):
                     }
                 },
         "back_urls": {
-            "success": "http://127.0.0.1:8000/checkout/successfully",
-            "failure": "http://127.0.0.1:8000/checkout/failed",
-            "pending": "http://127.0.0.1:8000/checkout/pending"
+            "success": Credentials.success_url(),
+            "failure": Credentials.failure_url(),
+            "pending": Credentials.pending_url()
         },
         "auto_return": "approved",
-        "notification_url":"https://webhook.site/026918ad-b8c7-428a-b2ac-a169308075d1",
+        "notification_url":Credentials.notification_url(),
         "statement_descriptor": "IKIGAIMANGA",
         "external_reference": str(order_id.id),
         }
@@ -253,7 +254,8 @@ def paymentView(request):
         return render(request,template_name,{
         'order': order_id,
         'data_settings': Show.settings_data(),
-        'preference': preference
+        'preference': preference,
+        'credentials':Credentials.mercadopago()
     })
 
 def SuccessfullyView(request):
