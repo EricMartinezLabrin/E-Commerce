@@ -6,8 +6,7 @@ class Credentials():
         return sand
     
     def notification_url():
-        notification_url = 'https://webhook.site/026918ad-b8c7-428a-b2ac-a169308075d1'
-
+        notification_url = 'http://dsecargas.tk:8000/payment/mercadopago'
         return notification_url
 
     def success_url():
