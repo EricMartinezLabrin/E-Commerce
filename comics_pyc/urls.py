@@ -43,7 +43,6 @@ urlpatterns = [
     path('checkout/successfully', login_required(views.SuccessfullyView), name="successfully"),
     path('checkout/failed', login_required(views.FailedView.as_view()), name="failed"),
     path('orders/<int:pk>', login_required(views.OrdersView), name="orders"),
-
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

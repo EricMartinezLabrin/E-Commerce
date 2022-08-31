@@ -173,9 +173,10 @@ def CheckoutView(request):
 
 def paymentView(request):
     cart_data = request.session.get('cart_number')
+    order = None
 
     if cart_data is not {}:
-        template_name = 'inicio/successfully.html'
+        template_name = 'inicio/processing.html'
         order = Order()
         subtotal = request.session.get('cart_total')
         total_shipping = 0
@@ -203,6 +204,20 @@ def paymentView(request):
         request.session.modified=True
 
         # SDK de Mercado Pago
+        #CREATE ITEMS
+        items =[]
+        for key, value in cart_data.items():
+            # for key, value in value.items():
+            block = {
+                "id": str(value['product_id']),
+                "title": value['name'],
+                "currency_id": "CLP",
+                "picture_url": "/media/"+value['image'],
+                "description": value['description'],
+                "quantity": value['quantity'],
+                "unit_price": Product.objects.get(pk=value['product_id']).price
+            }
+            items.append(block)
 
         # Agrega credenciales
         sdk = mercadopago.SDK("TEST-1816279427628496-082518-84255c0be73596985adaf2dccacaeee1-113262566")
@@ -210,13 +225,25 @@ def paymentView(request):
 
         # Crea un ítem en la preferencia
         preference_data = {
-            "items": [
-                {
-                    "title": "Mi producto",
-                    "quantity": 1,
-                    "unit_price": 75
-                }
-            ]
+            "items": items,
+
+        "payer": {
+            "name": request.user.first_name,
+            "surname": request.user.last_name,
+            "email": request.user.email,
+            "phone": {
+                "area_code": "56",
+                "number": request.user.userdetail.phone
+                    }
+                },
+        "back_urls": {
+            "success": "http://127.0.0.1:8000/checkout/successfully",
+            "failure": "http://127.0.0.1:8000/checkout/failed",
+            "pending": "http://127.0.0.1:8000/checkout/pending"
+        },
+        "auto_return": "approved",
+        "statement_descriptor": "IKIGAIMANGA",
+        "external_reference": str(order_id.id),
         }
 
         preference_response = sdk.preference().create(preference_data)
@@ -228,13 +255,22 @@ def paymentView(request):
         'preference': preference
     })
 
-class SuccessfullyView(TemplateView):
+def SuccessfullyView(request):
     template_name = 'inicio/successfully.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['data_settings'] = Show.settings_data()
-        return context
+    data_settings = Show.settings_data()
+    merchant_order_id = request.GET['merchant_order_id']
+    payment_type = request.GET['payment_type']
+    status = request.GET['status']
+    external_reference = request.GET['external_reference']
+    
+    return render(request,template_name,{
+        'merchant_order_id': merchant_order_id,
+        'payment_type': payment_type,
+        'status': status,
+        'status': status,
+        'external_reference': external_reference,
+        'data_settings':data_settings
+    })
 
 class FailedView(TemplateView):
     template_name = 'inicio/failed.html'

@@ -1,29 +1,19 @@
 {% extends 'inicio/base.html' %}
 {% block body %}
-<h1>Pago Correcto</h1>
-{{error}}
-{{order}}
+<h1>Tu pago fue realizado correctamente</h1>
 
-{% comment %} // SDK MercadoPago.js V2 {% endcomment %}
-<script src="https://sdk.mercadopago.com/js/v2"></script>
-{{preference}}
-
-<div class="cho-container"></div>
-<script>
-  const mp = new MercadoPago('TEST-475c9832-3e61-4ee5-a836-eca12f932bb6', {
-    locale: 'es-CL'
-  });
-
-  mp.checkout({
-    preference: {
-      id: '{{preference.id}}'
-    },
-    render: {
-      container: '.cho-container',
-      label: 'Pagar',
-    }
-  });
-</script>
+<div class="product p-3">
+  <h5 style="color:green">Felicidades, tu pedido fue completado</h5>
+  <br>
+  <h3>Detalles del Pedido</h3>
+  <br>
+  <p><span>Número de pedido:</span>{{external_reference}}</p>
+  <p><span>Status:</span>{{status}}</p>
+  <p><span>Forma de Pago:</span>{{payment_type}}</p>
+  <p><span>Comprobante de pago:</span>{{merchant_order_id}}</p>
+  <hr>
+  Puedes ver el estado de tu pedido <a href="{% url 'orders' user.id %}">aquí</a>
+</div>
 
 
 

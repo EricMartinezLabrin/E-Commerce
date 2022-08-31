@@ -1,0 +1,29 @@
+{% extends 'inicio/base.html' %}
+{% block body %}
+<h1>Estamos procesando el pago</h1>
+<p>Porfavor asegurese de que las ventanas emergentes sean permitidas</p>
+
+{% comment %} // SDK MercadoPago.js V2 {% endcomment %}
+<script src="https://sdk.mercadopago.com/js/v2"></script>
+
+<div class="cho-container"></div>
+<script>
+  const mp = new MercadoPago('TEST-475c9832-3e61-4ee5-a836-eca12f932bb6', {
+    locale: 'es-CL'
+  });
+
+  mp.checkout({
+    preference: {
+      id: '{{preference.id}}'
+    },
+    autoOpen: true,
+    render: {
+      container: '.cho-container',
+      label: 'Pagar',
+    }
+  });
+</script>
+
+
+
+{% endblock %}
