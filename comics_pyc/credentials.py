@@ -1,12 +1,12 @@
 class Credentials():
-    def mercadopago():
+    def mercadopago(self):
         production = ''
         sand = 'TEST-1816279427628496-082518-84255c0be73596985adaf2dccacaeee1-113262566'
 
         return sand
     
     def notification_url():
-        notification_url = 'http://dsecargas.tk:8000/payment/mercadopago'
+        notification_url = 'http://descargas.tk:8000/payment/mercadopago'
         return notification_url
 
     def success_url():

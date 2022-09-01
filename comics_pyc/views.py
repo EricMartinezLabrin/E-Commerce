@@ -255,7 +255,7 @@ def paymentView(request):
         'order': order_id,
         'data_settings': Show.settings_data(),
         'preference': preference,
-        'credentials':Credentials.mercadopago()
+        'credentials': Credentials.mercadopago()
     })
 
 def SuccessfullyView(request):

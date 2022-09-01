@@ -18,7 +18,6 @@ from comics_pyc.credentials import Credentials
 
 #python
 import requests
-import json
 
 class UserAccessMixin(PermissionRequiredMixin):
     def dispatch(self, request, *args, **kwargs):
@@ -542,17 +541,20 @@ def UsersCreateView(request):
         })
 
 def MercadoPagoView(request):
-    id = request.GET['id']
-    url = 'https://api.mercadopago.com/v1/payments/'+id
-    json_data = {}
-    headers = {'Content-Type': 'application/json','Authorization': token}
+    id = request.GET['data']['id']
     token = Credentials.mercadopago()
-    response = requests.post(url, data=json.dumps(json_data),headers=headers)
+    url = "https://api.mercadopago.com/v1/payments/"+id
 
-    data=response.json()
+    payload={}
+    headers = {
+    'Authorization': 'Bearer '+token
+    }
 
-    order_id = data['external_reference']
-    status = data['payments']['status']
+    response = requests.request("GET", url, headers=headers, data=payload)
+    response = response.json()
+
+    order_id = response['external_reference']
+    status = response['status']
 
     if status == 'approved':
         status_id = 2
@@ -577,5 +579,3 @@ def MercadoPagoView(request):
     order = Order.objects.get(pk=order_id)
     order.status = status_instance
     order.save()
-
-    return HttpResponse()
