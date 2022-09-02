@@ -8,6 +8,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.views import redirect_to_login, PasswordChangeView, PasswordChangeDoneView
 from django.contrib.auth.models import User
 from django.contrib.auth import views as auth_views
+from django.views.decorators.csrf import csrf_exempt
 
 #Local
 from .models import Banner,Category,SubCategory, Product, Cart, Order, Parcel, UserDetail, Region, Settings, Status
@@ -540,65 +541,66 @@ def UsersCreateView(request):
             'data_settings' : Show.settings_data
         })
 
+@csrf_exempt
 def MercadoPagoView(request):
-    sdk = mercadopago.SDK(Credentials.mercadopago())
-    payment_data = {
-    "transaction_amount": float(request.POST.get("transaction_amount")),
-    "token": request.POST.get("token"),
-    "description": request.POST.get("description"),
-    "installments": int(request.POST.get("installments")),
-    "payment_method_id": request.POST.get("payment_method_id"),
-    "notification_url": "http://requestbin.fullcontact.com/1ogudgk1",
-    "payer": {
-        "email": request.POST.get("email"),
-        "identification": {
-            "number": request.POST.get("number")
-        }
-    }
-    }
-
-    payment_response = sdk.payment().create(payment_data)
-    payment = payment_response["response"]
-
-    print(payment)
-    # id = request.POST['data']['id']
-    # token = Credentials.mercadopago()
-    
-    # url = "https://api.mercadopago.com/v1/payments/"+id
-
-    # payload={}
-    # headers = {
-    # 'Authorization': 'Bearer '+token
+    # sdk = mercadopago.SDK(Credentials.mercadopago())
+    # payment_data = {
+    # "transaction_amount": float(request.POST.get("transaction_amount")),
+    # "token": request.POST.get("token"),
+    # "description": request.POST.get("description"),
+    # "installments": int(request.POST.get("installments")),
+    # "payment_method_id": request.POST.get("payment_method_id"),
+    # "notification_url": Credentials.notification_url(),
+    # "payer": {
+    #     "email": request.POST.get("email"),
+    #     "identification": {
+    #         "number": request.POST.get("number")
+    #     }
+    # }
     # }
 
-    # response = requests.request("GET", url, headers=headers, data=payload)
-    # response = response.json()
+    # payment_response = sdk.payment().create(payment_data)
+    # payment = payment_response["response"]
 
-    # order_id = response['external_reference']
-    # status = response['status']
-
-    # if status == 'approved':
-    #     status_id = 2
-    # elif status == 'pending':
-    #     status_id = 1
-    # elif status == 'authorized':
-    #     status_id = 1
-    # elif status == 'in_process':
-    #     status_id = 7
-    # elif status == 'in_mediation':
-    #     status_id = 8
-    # elif status == 'rejected':
-    #     status_id = 5
-    # elif status == 'cancelled':
-    #     status_id = 9
-    # elif status == 'refunded':
-    #     status_id = 6
-    # elif status == 'charged_back':
-    #     status_id = 10
+    # return render(request,'adm/mercadopago.html')
+    id = request.POST['data']['id']
+    token = Credentials.mercadopago()
     
-    # status_instance = Status.objects.get(pk=status_id)
-    # order = Order.objects.get(pk=order_id)
-    # order.status = status_instance
-    # order.save()
+    url = "https://api.mercadopago.com/v1/payments/"+id
 
-    # print(response.text)
+    payload={}
+    headers = {
+    'Authorization': 'Bearer '+token
+    }
+
+    response = requests.request("GET", url, headers=headers, data=payload)
+    response = response.json()
+
+    order_id = response['external_reference']
+    status = response['status']
+
+    if status == 'approved':
+        status_id = 2
+    elif status == 'pending':
+        status_id = 1
+    elif status == 'authorized':
+        status_id = 1
+    elif status == 'in_process':
+        status_id = 7
+    elif status == 'in_mediation':
+        status_id = 8
+    elif status == 'rejected':
+        status_id = 5
+    elif status == 'cancelled':
+        status_id = 9
+    elif status == 'refunded':
+        status_id = 6
+    elif status == 'charged_back':
+        status_id = 10
+    
+    status_instance = Status.objects.get(pk=status_id)
+    order = Order.objects.get(pk=order_id)
+    order.status = status_instance
+    order.save()
+
+    print(response.text)

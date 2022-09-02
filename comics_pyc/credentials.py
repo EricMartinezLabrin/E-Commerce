@@ -20,7 +20,3 @@ class Credentials():
     def pending_url():
         pending = "http://descargas.tk:8000/checkout/pending"
         return pending
-
-    def notification_url():
-        notification = 'http://descargas.tk:8000/payment/mercadopago'
-        return notification
