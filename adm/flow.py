@@ -1,7 +1,8 @@
+
+from models import Order,Status
 import requests
 import mercadopago
 import json
-from adm.models import Order,Status
 # from adm.models import Order, Status
     
 url = "https://api.mercadopago.com/v1/payments/1307988079"
@@ -19,7 +20,26 @@ print('id= '+order_id)
 print('status= '+status)
 print('-----------------')
 
-status_instance = Status.objects.get(pk=status_id)
+if status == 'approved':
+    status_id = 2
+elif status == 'pending':
+    status_id = 1
+elif status == 'authorized':
+    status_id = 1
+elif status == 'in_process':
+    status_id = 7
+elif status == 'in_mediation':
+    status_id = 8
+elif status == 'rejected':
+    status_id = 5
+elif status == 'cancelled':
+    status_id = 9
+elif status == 'refunded':
+    status_id = 6
+elif status == 'charged_back':
+    status_id = 10
+
+status_instance = Status.objects.get(pk=status)
 order = Order.objects.get(pk=order_id)
 print('El primer status es '+order.status.name)
 order.status = status_instance

@@ -6,7 +6,7 @@ class Credentials():
         return sand
     
     def notification_url():
-        notification_url = 'http://descargas.tk:8000/payment/mercadopago'
+        notification_url = 'http://descargas.tk:8000/adm/payment/mercadopago'
         return notification_url
 
     def success_url():
