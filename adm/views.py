@@ -19,6 +19,7 @@ from comics_pyc.credentials import Credentials
 #python
 import requests
 import mercadopago
+import json
 
 class UserAccessMixin(PermissionRequiredMixin):
     def dispatch(self, request, *args, **kwargs):
@@ -337,14 +338,14 @@ def SubCategory_Create(request):
         # Fetching the form data
         uploadedFile = request.FILES["banner"]
         name = request.POST["name"]
-        subcategory = request.POST["subcategory"]
-        subcategory = Category.objects.filter(pk=subcategory)[0]
+        category = request.POST["category"]
+        category = Category.objects.filter(pk=category)[0]
 
         # Saving the information in the database
         document = SubCategory(
             name = name,
             banner = uploadedFile,
-            subcategory = subcategory
+            category = category
         )
         document.save()
 
@@ -543,64 +544,59 @@ def UsersCreateView(request):
 
 @csrf_exempt
 def MercadoPagoView(request):
-    # sdk = mercadopago.SDK(Credentials.mercadopago())
-    # payment_data = {
-    # "transaction_amount": float(request.POST.get("transaction_amount")),
-    # "token": request.POST.get("token"),
-    # "description": request.POST.get("description"),
-    # "installments": int(request.POST.get("installments")),
-    # "payment_method_id": request.POST.get("payment_method_id"),
-    # "notification_url": Credentials.notification_url(),
-    # "payer": {
-    #     "email": request.POST.get("email"),
-    #     "identification": {
-    #         "number": request.POST.get("number")
-    #     }
-    # }
-    # }
+    try:
+        id = request.GET['data.id']
+    except:
+        id = request.GET['id']
 
-    # payment_response = sdk.payment().create(payment_data)
-    # payment = payment_response["response"]
+    try:      
+        api_type = request.GET['type']
+    except:
+        api_type =request.GET['topic']
 
-    # return render(request,'adm/mercadopago.html')
-    id = request.POST['data']['id']
-    token = Credentials.mercadopago()
-    
-    url = "https://api.mercadopago.com/v1/payments/"+id
+    if api_type == 'payment':
 
-    payload={}
-    headers = {
-    'Authorization': 'Bearer '+token
-    }
+        token = Credentials.mercadopago()
+        
+        url = "https://api.mercadopago.com/v1/payments/"+id
 
-    response = requests.request("GET", url, headers=headers, data=payload)
-    response = response.json()
+        payload={}
+        headers = {
+        'Authorization': 'Bearer '+token
+        }
 
-    order_id = response['external_reference']
-    status = response['status']
+        response = requests.request("GET", url, headers=headers, data=payload)
+        response = response.json()
 
-    if status == 'approved':
-        status_id = 2
-    elif status == 'pending':
-        status_id = 1
-    elif status == 'authorized':
-        status_id = 1
-    elif status == 'in_process':
-        status_id = 7
-    elif status == 'in_mediation':
-        status_id = 8
-    elif status == 'rejected':
-        status_id = 5
-    elif status == 'cancelled':
-        status_id = 9
-    elif status == 'refunded':
-        status_id = 6
-    elif status == 'charged_back':
-        status_id = 10
-    
-    status_instance = Status.objects.get(pk=status_id)
-    order = Order.objects.get(pk=order_id)
-    order.status = status_instance
-    order.save()
+        order_id = response['external_reference']
+        status = response['status']
 
-    print(response.text)
+        if status == 'approved':
+            status_id = 2
+        elif status == 'pending':
+            status_id = 1
+        elif status == 'authorized':
+            status_id = 1
+        elif status == 'in_process':
+            status_id = 7
+        elif status == 'in_mediation':
+            status_id = 8
+        elif status == 'rejected':
+            status_id = 5
+        elif status == 'cancelled':
+            status_id = 9
+        elif status == 'refunded':
+            status_id = 6
+        elif status == 'charged_back':
+            status_id = 10
+        
+        status_instance = Status.objects.get(pk=status_id)
+        order = Order.objects.get(pk=order_id)
+        order.status = status_instance
+        order.save()
+
+        return HttpResponse('HTTP STATUS 200 (OK)')
+    elif api_type == 'merchant_order':
+        return HttpResponse('HTTP STATUS 200 (OK)')
+    else:
+        return HttpResponse('HTTP STATUS 200 (OK)')

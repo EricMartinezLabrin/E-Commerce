@@ -213,7 +213,7 @@ def paymentView(request):
                 "id": str(value['product_id']),
                 "title": value['name'],
                 "currency_id": "CLP",
-                "picture_url": "/media/"+value['image'],
+                "picture_url": "/media"+value['image'],
                 "description": value['description'],
                 "quantity": value['quantity'],
                 "unit_price": Product.objects.get(pk=value['product_id']).price
@@ -270,7 +270,6 @@ def SuccessfullyView(request):
         'merchant_order_id': merchant_order_id,
         'payment_type': payment_type,
         'status': status,
-        'status': status,
         'external_reference': external_reference,
         'data_settings':data_settings
     })
@@ -287,7 +286,6 @@ def FailedView(request):
         'merchant_order_id': merchant_order_id,
         'payment_type': payment_type,
         'status': status,
-        'status': status,
         'external_reference': external_reference,
         'data_settings':data_settings
     })
@@ -303,7 +301,6 @@ def PendingView(request):
     return render(request,template_name,{
         'merchant_order_id': merchant_order_id,
         'payment_type': payment_type,
-        'status': status,
         'status': status,
         'external_reference': external_reference,
         'data_settings':data_settings
