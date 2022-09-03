@@ -20,6 +20,7 @@ urlpatterns = [
     path("settings/create", login_required(views.SettingsCreateView.as_view()), name ="settings_create"),
     path("settings/update/<int:pk>", login_required(views.SettingsUpdateView.as_view()), name ="settings_update"),
     path("ads", login_required(views.AdsView.as_view()), name ="ads"),
+    path("ads/banner/secondary/<int:pk>", login_required(views.SecondaryBannerView.as_view()), name ="secondary_banner"),
     path("ads/banner/update/<int:pk>", login_required(views.BannerUpdateView.as_view()), name ="banner_update"),
     path("ads/banner/delete/<int:pk>", login_required(views.BannerDeleteView.as_view()), name ="banner_delete"),
     path("parcel", login_required(views.ParcelView.as_view()), name ="parcel"),

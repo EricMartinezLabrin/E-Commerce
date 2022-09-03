@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 
-from adm.models import Order, Settings, Status, Region
+from adm.models import Order, Settings, Status, Region, SecondaryBanner
 
 
 class Show():
@@ -53,6 +53,19 @@ class Show():
             Region.objects.create(name='Región de Los Lagos')
             Region.objects.create(name='Región de Aysén del General Carlos Ibáñez del Campo')
             Region.objects.create(name='Región de Magallanes y de la Antártica Chilena')
+
+        try:
+            SecondaryBanner.objects.get(pk=1)
+        except SecondaryBanner.DoesNotExist:
+            SecondaryBanner.objects.create(
+                    name = 'Anuncio 1',
+                    uploadedFile = "settings/logo.png"
+            )
+            SecondaryBanner.objects.create(
+                    name = 'Anuncio 2',
+                    uploadedFile = "settings/logo.png"
+            )
+
 
         try:
             data = Settings.objects.get(pk=1)

@@ -11,8 +11,8 @@ from django.contrib.auth import views as auth_views
 from django.views.decorators.csrf import csrf_exempt
 
 #Local
-from .models import Banner,Category,SubCategory, Product, Cart, Order, Parcel, UserDetail, Region, Settings, Status
-from .forms import AddNewBanner, AddCategory, AddSubCategory, AddProduct, CreateParcel, OrderStatus, SettingsForm, ProfileDetailForm, ProfileForm, CreateUser2
+from .models import Banner,Category,SubCategory, Product, Cart, Order, Parcel, UserDetail, Region, Settings, Status, SecondaryBanner
+from .forms import AddNewBanner, AddCategory, AddSubCategory, AddProduct, CreateParcel, OrderStatus, SettingsForm, ProfileDetailForm, ProfileForm, CreateUser2, SecondaryBannerForm
 from comics_pyc.functions import Show
 from comics_pyc.credentials import Credentials
 
@@ -163,6 +163,18 @@ class IndexView(UserAccessMixin,TemplateView):
         context['data_settings'] = Show.settings_data()
         return context
 
+class SecondaryBannerView(UserAccessMixin,UpdateView):
+    template_name = 'adm/secondary_banner.html'
+    permission_required = 'is_staff'
+    model = SecondaryBanner
+    form_class = SecondaryBannerForm
+    success_url = reverse_lazy('adm:ads')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_settings'] = Show.settings_data()
+        return context
+
 class ParcelView(UserAccessMixin,ListView):
     permission_required = 'is_staff'
     template_name = 'adm/parcel.html'
@@ -212,10 +224,16 @@ class AdsView(UserAccessMixin,ListView):
     permission_required = 'is_staff'
     model = Banner
     form = AddNewBanner
+
+    def get_ads():
+        ads = SecondaryBanner.objects.all()
+        return ads
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form']=self.form
         context['data_settings'] = Show.settings_data()
+        context['secondary_banner'] = AdsView.get_ads()
         return context
 
 class BannerUpdateView(UserAccessMixin,UpdateView):

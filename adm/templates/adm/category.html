@@ -84,7 +84,7 @@
    <tbody>
     {% for category in subcategories %}
     <tr>
-        <td>{{category.subcategory}} / {{category.name}}</td>
+        <td>{{category.category}} / {{category.name}}</td>
         <td>
             <a href="#" onclick="abrir_modal_edicion('{% url 'adm:modal_preview_category' category.pk %}')">
                 <img src="/media/{{category.banner}}" alt="{{category.name}}" width="50">

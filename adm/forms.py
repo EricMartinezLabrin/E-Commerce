@@ -1,11 +1,10 @@
 #Django
-from turtle import textinput
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
 #Local
-from .models import Banner,Category,SubCategory,Product,UserDetail, Parcel, Order, Settings
+from .models import Banner,Category,SubCategory,Product,UserDetail, Parcel, Order, Settings, SecondaryBanner
 
 
 class AddNewBanner(forms.ModelForm):
@@ -22,6 +21,21 @@ class AddNewBanner(forms.ModelForm):
             'name': forms.TextInput(attrs={'class':'form-control'}),
             'uploadedFile': forms.FileInput(attrs={'class':'form-control','accept':'image/png'})
         }
+
+class SecondaryBannerForm(forms.ModelForm):
+
+    class Meta:
+        model = SecondaryBanner
+        fields = ['name','uploadedFile']
+        labels = {
+            'name': 'Nombre',
+            'uploadedFile': 'Nuevo Banner'
+        }
+        widgets = {
+            'name': forms.TextInput(attrs={'class':'form-control'}),
+            'uploadedFile': forms.FileInput(attrs={'class':'form-control'})
+        }
+
 
 class AddCategory(forms.ModelForm):
 

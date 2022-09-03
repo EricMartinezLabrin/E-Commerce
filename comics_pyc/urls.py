@@ -31,6 +31,7 @@ urlpatterns = [
     path('logout', views.Logout.as_view(), name='logout'),
     path('adm/', include('adm.urls')),
     path('all_products', views.AllProductsView.as_view(), name="all_products"),
+    path('contact/<int:pk>', views.ContactView.as_view(), name="contact"),
     path('user/create', views.CreateUser, name="create_user"),
     path('categories/<int:pk>', views.CategoriesView.as_view(), name='categories'),
     path('details/<int:pk>', views.DetailView.as_view(), name='details'),
@@ -44,6 +45,7 @@ urlpatterns = [
     path('checkout/failed', login_required(views.FailedView), name="failed"),
     path('checkout/pending', login_required(views.PendingView), name="pending"),
     path('orders/<int:pk>', login_required(views.OrdersView), name="orders"),
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,7 @@
+{% extends 'inicio/base.html' %}
+{% block body %}
+<h1>Contacto</h1>
+<p class="products ps-4 pb-5">
+    Puedes contactarnos a nuestro email {{object.email}} o por whats app haciendo clic <a href="wa.me/569{{object.userdetail.phone}}">aquí</a>
+</p>
+{% endblock body %}

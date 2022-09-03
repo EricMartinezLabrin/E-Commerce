@@ -10,7 +10,7 @@ from django.contrib.auth import authenticate, login
 
 #local
 from .functions import Show
-from adm.models import Banner, Category, Product, Order,UserDetail, Status,Cart,Parcel
+from adm.models import Banner, Category, Product, Order, SecondaryBanner, Settings,UserDetail, Status,Cart,Parcel
 from .cart import CartProcessor
 from adm import forms
 from .credentials import Credentials
@@ -81,12 +81,17 @@ class IndexView(TemplateView):
         show = Product.objects.filter(status=active)
         return show
 
+    def show_secondary_banner(active=True):
+        show = SecondaryBanner.objects.filter(status=active)
+        return show
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['banner'] = IndexView.show_banner()
         context['categories'] = IndexView.show_category()
         context['products'] = IndexView.show_product()
         context['data_settings'] = Show.settings_data()
+        context['secondary_banner'] = IndexView.show_secondary_banner()
         return context
 
 class AllProductsView(ListView):
@@ -340,3 +345,6 @@ def OrdersView(request,pk):
         'data_settings':data_settings
     })
 
+class ContactView(DetailView):
+    model = Settings
+    template_name = 'inicio/contact.html'
