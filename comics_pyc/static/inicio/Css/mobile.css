@@ -32,6 +32,25 @@ content h1,h2{
 div.menu-desktop{
     display: none;
 }
+.a-none{
+    text-decoration: none!important;
+    color: var(--text_color)!important;
+}
+.container-img{
+    overflow:hidden;
+    position:relative;
+    height: 150px;
+}
+.container-img > .crop {
+    position:absolute;
+    left: -100%;
+    right: -100%;
+    top: -100%;
+    bottom: -100%;
+    margin: auto;
+    min-height: 100%;
+    min-width: 100%;
+}
 .cart{
     font-size: 2rem;
     color: var(--orange_icons);
@@ -168,3 +187,30 @@ div.bg-orange{
 div.cart a{
     text-decoration: None!important;
 }
+
+h2.title-category{
+    background-color: rgba(0,0,0,0.6);
+    border-radius: 6.5px;
+    text-align: center;
+    font-size: 2rem;
+    width: 70vw;    
+    align-self: center;
+}
+div.position-category{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+div.card.bg-none{
+    background-color: transparent!important;
+}
+
+.card-6{
+    margin: 1rem;
+    width: calc(50vw - 2rem);
+}
+.card-6 h1, .card-6 h2{
+    padding: 0;
+    text-align: center;
+}
+

@@ -1,7 +1,8 @@
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
+import operator
 
-from adm.models import Order, Settings, Status, Region, SecondaryBanner
+from adm.models import Cart, Order, Settings, Status, Region, SecondaryBanner
 
 
 class Show():
@@ -72,3 +73,18 @@ class Show():
         except:
             data = ''
         return data
+
+class GetData():
+    def get_bestseller():
+        latest_sales = Cart.objects.all().order_by('-id')[:100]
+        ranking = {}
+        for data in latest_sales:
+            product = str(data.product.id)   
+            if product not in ranking:
+                ranking[product]= int(data.quantity)
+            else:
+                ranking[product]+=int(data.quantity)
+
+        sort = sorted(ranking.items(),key=operator.itemgetter(1),reverse=True)
+        return sort
+

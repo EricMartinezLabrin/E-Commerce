@@ -4,6 +4,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="{% static 'inicio/Images/logo.png' %}">
     <link rel="stylesheet" href="{% static 'inicio/Css/mobile.css'%}">
     <link rel="stylesheet" href="{% static 'inicio/Css/tablet.css'%}" media="screen and (min-width: 600px)">
     <link rel="stylesheet" href="{% static 'inicio/Css/desktop.css'%}" media="screen and (min-width: 800px)">
@@ -14,9 +15,57 @@
 </head>
   <body>
     <header>
-      <div class="tittle w-100 d-flex justify-content-center">
-        <h1 class="justify-content-center">Contactanos <i class="bi bi-whatsapp whatsapp"></i> +569 {{data_settings.phone}} <a href="{% url 'cart' %}" class="cart"><i class="bi bi-cart-check-fill"></i></a></h1> 
-     </div>
+      <div class="tittle w-100 d-flex justify-content-evenly ">
+        <h1 class="mt-2">
+          <a href="https://facebook.com/{{data_settings.facebook}}" class="a-none">
+            <i class="bi bi-facebook"></i> 
+            Facebook
+          </a>
+        </h1>
+        <h1 class="mt-2">
+          <a href="https://instagram.com/{{data_settings.instagram}}" class="a-none">
+            <i class="bi bi-instagram"></i>
+            Instagram
+          </a>
+        </h1>
+        <h1 class="mt-2">
+          <a href="mailto:{{data_settings.email}}" class="a-none">
+            <i class="bi bi-envelope"></i>
+            Email
+          </a>
+        </h1>
+        <h1 class="mt-2">
+          Contactanos <i class="bi bi-whatsapp whatsapp"></i> +569 {{data_settings.phone}} 
+        </h1> 
+        <h1>
+          <a href="{% url 'cart' %}" class="cart"><i class="bi bi-cart-check-fill"></i></a>
+        </h1>
+        {% if user.is_authenticated %}
+            <div class="dropdown desktop ">
+              <a class="btn btn-secondary dropdown-toggle cart" href="{% url 'login' %}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-person-fill"></i>
+              </a>
+            
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">{{user.username}}</a></li>
+                {% if user.is_staff == True %}
+                <li><a class="dropdown-item" href="{% url 'adm:index' %}">Administración</a></li>
+                {% endif %}
+                <li><a class="dropdown-item" href="{% url 'orders' request.user.id %}">Mis Compras</a></li>
+                <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar Sesión</a></li>
+              </ul>
+            </div>
+            {% else %}
+            <a href="{% url 'login' %}" class="desktop cart"><i class="bi bi-person-fill"></i></a>
+            {% endif %}
+      </div>
+     <!-- Logo Desktop-->
+     <div class="logo logo-desktop desktop">
+      <a href="{% url 'home' %}" class="d-flex">
+        <img src="/media/{{data_settings.logo}}" alt="{{data_settings.name}}">
+      </a>
+    </div>
+    <!--Fin Logo Desktop-->
         <div class="d-flex justify-content-around">
           <div class="menu-mobile align-self-center">
             <button class="navbar-toggler menu" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
@@ -34,19 +83,21 @@
           </div>
           <!--End Menu-->
 
-          <div class="logo">
+          <div class="logo menu-mobile">
             <a href="{% url 'home' %}" class="d-flex">
-              <img src="/media/{{data_settings.logo}}" alt="{{data_settings.name}}" width="80">
+              <img src="/media/{{data_settings.logo}}" alt="{{data_settings.name}}" width="120">
             </a>
           </div>
           <!--Menu Desktop-->
-          <div class="desktop menu-desktop align-content-around flex-wrap">
-            {% include 'inicio/menu.html' %}
-          </div> 
+          <div class="w-100">
+            <div class="desktop menu-desktop">
+              {% include 'inicio/menu.html' %}
+            </div> 
+          </div>
           <!--End Menu Desktop-->
           <div class="data align-self-center">
             {% if user.is_authenticated %}
-            <div class="dropdown">
+            <div class="dropdown mobile">
               <a class="btn btn-secondary dropdown-toggle" href="{% url 'login' %}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="bi bi-person-fill"></i>
               </a>
@@ -61,7 +112,7 @@
               </ul>
             </div>
             {% else %}
-            <a href="{% url 'login' %}"><i class="bi bi-person-fill"></i></a>
+            <a href="{% url 'login' %}" class="mobile"><i class="bi bi-person-fill"></i></a>
             {% endif %}
           </div>
         </div>

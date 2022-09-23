@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
 #Local
-from .models import Banner,Category,SubCategory,Product,UserDetail, Parcel, Order, Settings, SecondaryBanner
+from .models import Banner,Category,SubCategory,Product,UserDetail, Parcel, Order, Settings, SecondaryBanner, Why
 
 
 class AddNewBanner(forms.ModelForm):
@@ -35,7 +35,6 @@ class SecondaryBannerForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'class':'form-control'}),
             'uploadedFile': forms.FileInput(attrs={'class':'form-control'})
         }
-
 
 class AddCategory(forms.ModelForm):
 
@@ -159,11 +158,15 @@ class SettingsForm(forms.ModelForm):
             'address': 'Dirección Empresa',
             'phone': 'Teléfono Empresa',
             'email': 'E-Mail Empresa',
+            'facebook': 'Facebook',
+            'instagram': 'Instagram',
             'logo': 'Logotipo'
         }
         widgets={
             'name': forms.TextInput(attrs={'class':'form-control'}),
             'address': forms.TextInput(attrs={'class':'form-control'}),
+            'facebook': forms.TextInput(attrs={'class':'form-control'}),
+            'instagram': forms.TextInput(attrs={'class':'form-control'}),
             'phone': forms.NumberInput(attrs={'class':'form-control'}),
             'email': forms.EmailInput(attrs={'class':'form-control'}),
             'logo': forms.FileInput(attrs={'class':'form-control', 'acept':'image/png'})
@@ -193,3 +196,16 @@ class ProfileDetailForm(forms.ModelForm):
             'parcel':forms.Select(attrs={'class':'form-control'}),
             'image': forms.FileInput(attrs={'class':'form-control', 'acept':'image/png'})
         }
+
+class WhyForm(forms.ModelForm):
+    class Meta:
+        model = Why
+        fields = ['name']
+        labels = {
+            'name': '¿Por qué comprar?'
+        }
+        widgets = {
+            'name': forms.TextInput(attrs={'class':'form-control'})
+        }
+
+

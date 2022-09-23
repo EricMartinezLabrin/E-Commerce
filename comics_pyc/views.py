@@ -9,8 +9,8 @@ from django.contrib.auth.views import LoginView,LogoutView
 from django.contrib.auth import authenticate, login
 
 #local
-from .functions import Show
-from adm.models import Banner, Category, Product, Order, SecondaryBanner, Settings,UserDetail, Status,Cart,Parcel
+from .functions import GetData, Show
+from adm.models import Banner, Category, Product, Order, SecondaryBanner, Settings, SubCategory,UserDetail, Status,Cart,Parcel, Why
 from .cart import CartProcessor
 from adm import forms
 from .credentials import Credentials
@@ -112,19 +112,61 @@ class CategoriesView(DetailView):
         show_product = Product.objects.filter(category=self.kwargs['pk'])
         return show_product
 
+    def show_subcategories(self):
+        category = Category.objects.get(pk=self.kwargs['pk'])
+        subcateries = SubCategory.objects.filter(category=category)
+        return subcateries
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['products'] = self.show_products()
         context['categories'] = IndexView.show_category()
         context['data_settings'] = Show.settings_data()
+        context['subcategory'] = self.show_subcategories()
         return context
 
+def SubcategoryView(request,pk):
+    template_name='inicio/subcategory.html'
+    subcategory=SubCategory.objects.get(pk=pk)
+    products = Product.objects.filter(subcategory=subcategory)
+    return render(request,template_name,{
+        'products':products,
+        'data_settings' : Show.settings_data,
+        'object':subcategory
+    })
+    
 class DetailView(DetailView):
     template_name = 'inicio/details.html'
     model = Product
+
+    def get_why():
+        why = Why.objects.all()
+        return why
+    
+    def best_seller_data(self):
+        best = GetData.get_bestseller()
+        for check in best[:0]:
+            if str(check[0]) == str(self.kwargs.get('pk')):
+                best_data = best[1:2]
+            else:
+                best_data = best[:0]
+
+        for data in best_data:
+            data_export={
+                'name':Product.objects.get(pk=data[0]).name,
+                'price':Product.objects.get(pk=data[0]).price,
+                'description':Product.objects.get(pk=data[0]).description,
+                'image':Product.objects.get(pk=data[0]).image,
+                'id':Product.objects.get(pk=data[0]).id
+            }
+        return data_export    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["categories"] = IndexView.show_category()
         context['data_settings'] = Show.settings_data()
+        context['why'] = DetailView.get_why()
+        context['best_seller'] = self.best_seller_data
         return context
 
 class CartView(TemplateView):
@@ -348,3 +390,16 @@ def OrdersView(request,pk):
 class ContactView(DetailView):
     model = Settings
     template_name = 'inicio/contact.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categories"] = IndexView.show_category()
+        context['data_settings'] = Show.settings_data()
+        return context 
+
+
+
+
+
+
+    

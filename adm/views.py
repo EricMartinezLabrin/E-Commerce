@@ -11,8 +11,8 @@ from django.contrib.auth import views as auth_views
 from django.views.decorators.csrf import csrf_exempt
 
 #Local
-from .models import Banner,Category,SubCategory, Product, Cart, Order, Parcel, UserDetail, Region, Settings, Status, SecondaryBanner
-from .forms import AddNewBanner, AddCategory, AddSubCategory, AddProduct, CreateParcel, OrderStatus, SettingsForm, ProfileDetailForm, ProfileForm, CreateUser2, SecondaryBannerForm
+from .models import Banner,Category,SubCategory, Product, Cart, Order, Parcel, UserDetail, Region, Settings, Status, SecondaryBanner, Why
+from .forms import AddNewBanner, AddCategory, AddSubCategory, AddProduct, CreateParcel, OrderStatus, SettingsForm, ProfileDetailForm, ProfileForm, CreateUser2, SecondaryBannerForm, WhyForm
 from comics_pyc.functions import Show
 from comics_pyc.credentials import Credentials
 
@@ -228,12 +228,17 @@ class AdsView(UserAccessMixin,ListView):
     def get_ads():
         ads = SecondaryBanner.objects.all()
         return ads
+    
+    def get_why():
+        why = Why.objects.all()
+        return why
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form']=self.form
         context['data_settings'] = Show.settings_data()
         context['secondary_banner'] = AdsView.get_ads()
+        context['why'] = AdsView.get_why()
         return context
 
 class BannerUpdateView(UserAccessMixin,UpdateView):
@@ -618,3 +623,43 @@ def MercadoPagoView(request):
         return HttpResponse('HTTP STATUS 200 (OK)')
     else:
         return HttpResponse('HTTP STATUS 200 (OK)')
+
+class WhyView(UserAccessMixin,CreateView):
+    permission_required = 'is_staff'
+    template_name='adm/why.html'
+    model = Why
+    success_url = reverse_lazy('adm:ads')
+    form_class = WhyForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_settings'] = Show.settings_data()
+        return context
+
+class WhyUpdateView(UserAccessMixin,UpdateView):
+    permission_required = 'is_staff'
+    template_name='adm/why.html'
+    model = Why
+    success_url = reverse_lazy('adm:ads')
+    form_class = WhyForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_settings'] = Show.settings_data()
+        return context
+
+class WhyDeleteView(UserAccessMixin,DeleteView):
+    permission_required = 'is_staff'
+    model = Why
+    template_name = "adm/users_delete.html"
+    success_url = reverse_lazy('adm:ads')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_settings'] = Show.settings_data()
+        return context
+
+ 
+
+
+

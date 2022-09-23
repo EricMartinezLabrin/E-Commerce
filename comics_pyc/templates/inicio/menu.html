@@ -1,10 +1,10 @@
-<div class="mt-2">
+<div class="">
     <a href="{% url 'home' %}">Inicio</a>              
 </div>
-<div class="mt-2">
+<div class="">
     <a href="{% url 'all_products' %}">Productos</a>              
 </div>
-<div class="dropdown mt-2">
+<div class="dropdown ">
     <a class="dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown">
         Categorias
     </a>
@@ -14,10 +14,10 @@
         {% endfor %}
     </ul>
 </div>
-{% comment %} <div class="mt-2">
+{% comment %} <div class="">
     <a href="{% url 'cart' %}">Carrito</a>
 </div> {% endcomment %}
-<div class="mt-2">
+<div class="">
     <a href="{% url 'contact' data_settings.pk %}">Contacto</a>
 </div>
 {% comment %} <div class="menu-desktop mt-2 sub-categorie">

@@ -1,7 +1,5 @@
-from unicodedata import name
 from django.db import models
 from django.contrib.auth.models import User
-from django.forms import CharField
 
 class Region(models.Model):
     name = models.CharField(max_length=51)
@@ -118,10 +116,19 @@ class Cart(models.Model):
 class Settings(models.Model):
     name = models.CharField(default='My Business', max_length=50)
     address = models.CharField(default='My Address', max_length=255)
+    instagram = models.CharField(default='My_Address', max_length=255)
+    facebook = models.CharField(default='My_Address', max_length=255)
     phone = models.IntegerField(default=0)
     email = models.EmailField(default='contacto@mybusiness.com')
     logo = models.FileField(upload_to="settings/")
 
     def __str__(self):
         return self.name
+
+class Why(models.Model):
+    name = models.CharField(max_length=250,null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
 

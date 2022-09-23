@@ -1,0 +1,29 @@
+{% extends 'inicio/base.html' %}
+{% load static %}
+{% block body %}
+{% comment %} <h1>{{object.name}}</h1> {% endcomment %}
+
+<br>
+<div class="card text-bg-dark">
+  <div class="container-img">
+    <img src="/media/{{object.banner}}" class="card-img crop" alt="Banner de la Categoria">
+  </div>
+  <div class="card-img-overlay position-category">
+    <h2 class="card-title title-category">{{object.name}}</h2>
+    <!--<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+    <p class="card-text"><small>Last updated 3 mins ago</small></p>-->
+  </div>
+</div>
+<div class="p-3">
+  <p>{{object.description}}</p>  
+</div>
+
+
+<h2>Productos Asociados</h2>
+<div class="d-flex align-content-center flex-wrap">
+    {% for product in products %}
+    {% include './product_card.html' %}
+    {% endfor %} 
+</div>
+
+{% endblock body %}

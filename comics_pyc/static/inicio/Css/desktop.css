@@ -13,6 +13,13 @@ body{
     display: block;
     margin: 1rem;
 }
+div.logo.logo-desktop{
+    margin-bottom: -80px;
+}
+div.logo.logo-desktop img{
+    width: 300px;
+    margin: 0 auto;
+}
 .logo a{
     text-decoration: none!important;
     color: var(--text_color)!important;
@@ -41,16 +48,15 @@ div.menu-mobile{
     display: none;
 }
 div.menu-desktop{
-    margin-top: 2rem;
     display: flex;
-    justify-content: space-evenly;
-    align-self: center;
-    width: 70vh;
+    justify-content:space-evenly;   
+    width: 40vw;
+    margin: 0 auto;
 }
 div.menu-desktop a{
     color:var(--text_color);
     text-decoration: none;
-    font-size: 2rem;
+    font-size: 1rem;
 }
 div.menu-desktop a:hover{
     color: var(--orange_icons);
@@ -61,6 +67,19 @@ div.menu-desktop ul.cat{
 .categories{
     margin: 1rem;
     width: calc(50vw - 3rem);
+}
+h2.title-category{
+    background-color: rgba(0,0,0,0.6);
+    border-radius: 8.5px;
+    text-align: center;
+    font-size: 5rem;
+    width: 70vw;    
+    align-self: center;
+}
+div.position-category{
+    display:flex;
+    justify-content: center;
+    align-items: center;
 }
 
 div.cart table{
@@ -92,4 +111,7 @@ div.buttons button{
 div.sub-categorie a{
     color: var(--font-grey);
     font-size: 1.2rem;
+}
+.card-6{
+    width: calc(16.8vw - 2.4rem);
 }

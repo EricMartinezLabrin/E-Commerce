@@ -34,6 +34,7 @@ urlpatterns = [
     path('contact/<int:pk>', views.ContactView.as_view(), name="contact"),
     path('user/create', views.CreateUser, name="create_user"),
     path('categories/<int:pk>', views.CategoriesView.as_view(), name='categories'),
+    path('subcategory/<int:pk>', views.SubcategoryView, name='subcategory'),
     path('details/<int:pk>', views.DetailView.as_view(), name='details'),
     path('cart', views.CartView.as_view(), name='cart'),
     path('cart/add/<int:product_id>', views.addCart, name='add'),

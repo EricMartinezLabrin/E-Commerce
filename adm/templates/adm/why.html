@@ -1,0 +1,12 @@
+{% extends 'adm/base.html' %}
+{% block title %}Motivos{% endblock title %}
+{% block body %}
+<h1>Motivos para Comprar</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="Terminar" class="btn btn-primary">
+</form>
+
+{% endblock body %}

@@ -1,5 +1,6 @@
 {% extends 'inicio/base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block body %}
 
@@ -16,15 +17,19 @@
         <div class="detail-box card-body">
           <div class="description">          
           <h3 class="card-title desktop">{{object.name}}</h3>
-          <h4 class="card-text">${{object.price}}</h4>
+          <h4 class="card-text">${{object.price|intcomma}}</h4>
           <p>{{object.description}}</p>
         </div>
 
           <div class="buttons">          
             <a href="{% url 'cart' %}"><p class="card-text"><button class="btn btn-primary">Comprar</button></p></a>
-            <span>por qué comprar 1</span><br>
-            <span>por qué comprar 2</span><br>
-            <span>por qué comprar 3</span>
+              <br>
+              {% if why %}
+                <h5>¿Porque preferirnos?</h5>
+                {% for data in why %}
+                  <span>🔥 {{data.name}}</span><br>
+                {% endfor %}
+              {% endif %}
           </div>
         </div>
       </div>
@@ -39,14 +44,14 @@
     <div class="mb-3">
       <div class="row g-0">
         <div class="col-md-4">
-          <img class="small" src="{% static 'inicio/Images/offer.png' %}" class="img-fluid rounded-start" alt="Producto">
+          <img class="small" src="/media/{{best_seller.image}}" class="img-fluid rounded-start" alt="{{best_seller.name}}">
         </div>
         <div class="col-md-8 main_background">
           <div class="detail-box card-body">
-            <h3 class="card-title desktop">Nombre del Producto</h3>
-            <h4 class="card-text">$1.000</h4>
-            <p>Descripción del artículo</p>
-            <a href="#">Más Detalles...</a>
+            <h3 class="card-title desktop">{{best_seller.name}}</h3>
+            <h4 class="card-text">${{best_seller.price|intcomma}}</h4>
+            <p>{{best_seller.description}}</p>
+            <a href="{% url 'details' best_seller.id %}">Más Detalles...</a>
           </div>
         </div>
       </div>

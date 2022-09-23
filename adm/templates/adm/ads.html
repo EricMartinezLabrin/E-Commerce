@@ -5,6 +5,7 @@
 <h1>Publicidad</h1>
 <h2>Banner Publicitario</h2>
 <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">Agregar Banner</button>
+<br>
 <div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
     <div class="offcanvas-header">
       <h5 class="offcanvas-title" id="staticBackdropLabel">Agregar banner</h5>
@@ -64,4 +65,34 @@
       </tbody>
     </table>
 
+  <h2>Por qué comprar</h2>
+  <a href="{% url 'adm:why' %}" class="btn btn-primary">Agregar Motivo</a>
+  <br>
+  {% if why %}
+  <br>
+    <table class="table">
+      <thead>
+        <th>Motivo</th>
+        <th>Acciones</th>
+      </thead>
+      <tbody>
+        
+          {% for detail in why %}
+            <tr>
+              <td>{{detail}}</td>
+              <td>        
+                <a href="{% url 'adm:why_update' detail.pk %}"><i class="bi bi-pencil"></i></a>
+                <a href="{% url 'adm:why_delete' detail.pk %}"><i class="bi bi-trash3"></i></a>
+              </td>
+            </tr>
+          {% endfor %}
+  
+      </tbody>
+    </table>
+    {% else %}
+    <br>
+      <div class="alert alert-danger" role="alert">
+        Aun no estableces por qué te deben comprar, <a href="{% url 'adm:why' %}" class="alert-link">crea un motivo ahora</a> 
+      </div>
+    {% endif %}
 {% endblock body %}
