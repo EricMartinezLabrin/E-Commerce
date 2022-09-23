@@ -31,7 +31,7 @@ SECRET_KEY = 'django-insecure-@4m^@25gg)$(yy-b*^@-j=p*jm&n7s3q96)%vtn#6r=)7#06*v
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['51.222.193.248','descargas.tk','ikigaimanga.tk']
 
 
 # Application definition
@@ -82,14 +82,24 @@ WSGI_APPLICATION = 'comics_pyc.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql', 
+#         'NAME': 'manga',
+#         'USER': 'root',
+#         'PASSWORD': 'Tarkan11.-',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', 
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'manga',
-        'USER': 'root',
-        'PASSWORD': 'Tarkan11.-',
+        'USER': 'ikigai',
+        'PASSWORD': 'Gonzalo258.-',
         'HOST': 'localhost',
-        'PORT': '3306',
+        'PORT': '5432',
     }
 }
 
@@ -129,7 +139,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -146,5 +158,5 @@ LOGIN_URL = reverse_lazy("login")
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
