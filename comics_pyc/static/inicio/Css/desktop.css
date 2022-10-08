@@ -17,7 +17,7 @@ div.logo.logo-desktop{
     margin-bottom: -80px;
 }
 div.logo.logo-desktop img{
-    width: 300px;
+    width: 400px;
     margin: 0 auto;
 }
 .logo a{
@@ -54,10 +54,13 @@ div.menu-desktop{
     margin: 0 auto;
 }
 div.menu-desktop a{
-    color:var(--text_color);
+    color:
+    var(--text_color);
     text-decoration: none;
-    font-size: 1rem;
+    font-size: 2.5rem;
+    font-family: Impact;
 }
+
 div.menu-desktop a:hover{
     color: var(--orange_icons);
 }
