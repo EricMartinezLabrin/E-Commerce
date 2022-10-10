@@ -150,7 +150,7 @@ class DetailView(DetailView):
                 best_data = best[1:2]
             else:
                 best_data = best[:0]
-
+        best_data=best[1:2]
         for data in best_data:
             data_export={
                 'name':Product.objects.get(pk=data[0]).name,
