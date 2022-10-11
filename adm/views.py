@@ -78,7 +78,7 @@ def CheckProfile(request, pk):
         try:
             parcel = Parcel.objects.get(pk=1)
         except Parcel.DoesNotExist:
-            Parcel.objects.create(name="")
+            Parcel.objects.create(id=1,name="")
             parcel = Parcel.objects.get(pk=1)
         UserDetail.objects.create(user=user, interior_number=0, region=region, parcel=parcel)
         return HttpResponseRedirect(reverse('adm:profile_update_others', args=(pk,)))
