@@ -14,9 +14,9 @@ html {
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 html body{
-    /* background-color: var(--background_body); */
-    background: rgb(245,6,6);
-    background: radial-gradient(circle, rgba(245,6,6,1) 0%, rgba(25,1,1,1) 85%);
+    background-color: var(--background_body);
+    /* background: rgb(245,6,6);
+    background: radial-gradient(circle, rgba(245,6,6,1) 0%, rgba(25,1,1,1) 85%); */
 
 }
 header{

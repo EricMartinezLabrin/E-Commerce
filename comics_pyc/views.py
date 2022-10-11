@@ -377,7 +377,7 @@ def OrdersView(request,pk):
     customer = User.objects.get(pk=pk)
 
     try:
-        object_list = Order.objects.filter(customer=customer)
+        object_list = Order.objects.filter(customer=customer).order_by('-id')
     except Order.DoesNotExist:
         object_list = None
 

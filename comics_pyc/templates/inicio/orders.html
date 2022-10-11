@@ -17,7 +17,7 @@
             <td colspan="4">Aún no haz echo una compra</td>
         </tr>
         {% endif %}
-        {% for order in object_list %}
+        {% for order in object_list%}
         <tr>
             <td>#{{order.id}} - {{order.customer}}</td>
             <td>{{order.creation_date}}</td>

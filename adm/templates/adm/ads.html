@@ -4,7 +4,11 @@
 
 <h1>Publicidad</h1>
 <h2>Banner Publicitario</h2>
-<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">Agregar Banner</button>
+{% if disabled == True %}
+  <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop" disabled>Agregar Banner</button>
+{% else %}
+  <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">Agregar Banner</button>
+{% endif %}
 <br>
 <div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
     <div class="offcanvas-header">

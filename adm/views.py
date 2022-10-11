@@ -233,12 +233,21 @@ class AdsView(UserAccessMixin,ListView):
         why = Why.objects.all()
         return why
 
+    def disable(self):
+        count_ads = Banner.objects.all().count()
+        if count_ads >= 3:
+            disable = True
+        else:
+            disable = False
+        return disable
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form']=self.form
         context['data_settings'] = Show.settings_data()
         context['secondary_banner'] = AdsView.get_ads()
         context['why'] = AdsView.get_why()
+        context['disabled'] = self.disable()
         return context
 
 class BannerUpdateView(UserAccessMixin,UpdateView):
