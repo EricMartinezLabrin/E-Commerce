@@ -145,20 +145,19 @@ class DetailView(DetailView):
     
     def best_seller_data(self):
         best = GetData.get_bestseller()
-        for check in best[:0]:
-            if str(check[0]) == str(self.kwargs.get('pk')):
-                best_data = best[1:2]
-            else:
-                best_data = best[:0]
 
-        for data in best_data:
-            data_export={
-                'name':Product.objects.get(pk=data[0]).name,
-                'price':Product.objects.get(pk=data[0]).price,
-                'description':Product.objects.get(pk=data[0]).description,
-                'image':Product.objects.get(pk=data[0]).image,
-                'id':Product.objects.get(pk=data[0]).id
-            }
+        if str(best[0][0]) == str(self.kwargs.get('pk')):
+            best_data = best[1][0]
+        else:
+            best_data = best[0][0]
+
+        data_export={
+            'name':Product.objects.get(pk=best_data[0]).name,
+            'price':Product.objects.get(pk=best_data[0]).price,
+            'description':Product.objects.get(pk=best_data[0]).description,
+            'image':Product.objects.get(pk=best_data[0]).image,
+            'id':Product.objects.get(pk=best_data[0]).id
+        }
         return data_export    
 
     def get_context_data(self, **kwargs):
