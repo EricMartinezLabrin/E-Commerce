@@ -9,9 +9,9 @@ class Region(models.Model):
 
 class Parcel(models.Model):
     name = models.CharField(max_length=50)
-    image = models.FileField(upload_to="parcel/")
-    max_price = models.IntegerField()
-    min_price = models.IntegerField()
+    image = models.FileField(upload_to="parcel/",null=True,blank=True)
+    max_price = models.IntegerField(null=True,blank=True)
+    min_price = models.IntegerField(null=True,blank=True)
 
     def __str__(self):
         return self.name
@@ -23,7 +23,7 @@ class UserDetail(models.Model):
     interior_number = models.IntegerField()
     comuna = models.CharField(max_length=200)
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
-    parcel = models.ForeignKey(Parcel, on_delete=models.CASCADE, null=True)
+    parcel = models.ForeignKey(Parcel, on_delete=models.CASCADE, null=True,blank=True)
     image = models.FileField(upload_to="profile/", null=True, blank=True)
 
     def __str__(self):

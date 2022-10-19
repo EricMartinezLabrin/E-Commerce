@@ -1,0 +1,17 @@
+:root{
+    --text_color:white;
+    --backgroud_header:black;
+    --orange_icons:#DF6300;
+    --background_body: black;
+    --background_submenu:#1F1F1F;
+    --font-grey:#b3b3b3;
+}
+html {
+    margin: 0;
+    padding: 0;
+    font-size: 62.5%;
+    box-sizing: border-box;
+}
+main{
+    margin: 1rem;
+}
