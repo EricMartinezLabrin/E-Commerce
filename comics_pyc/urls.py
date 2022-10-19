@@ -47,6 +47,7 @@ urlpatterns = [
     path('checkout/failed', login_required(views.FailedView), name="failed"),
     path('checkout/pending', login_required(views.PendingView), name="pending"),
     path('orders/<int:pk>', login_required(views.OrdersView), name="orders"),
+    path('tyc', views.TyCView.as_view(), name="tyc"),
 
 ]
 
