@@ -11,13 +11,13 @@ html {
     padding: 0;
     font-size: 62.5%;
     box-sizing: border-box;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 html body{
     background-color: var(--background_body);
+    /* background: rgb(245,6,6);
+    background: radial-gradient(circle, rgba(245,6,6,1) 0%, rgba(25,1,1,1) 85%); */
 
-}
-body footer div{
-    height: 100vh;
 }
 header{
     background-color: var(--backgroud_header);
@@ -76,15 +76,17 @@ button.close-menu{
     font-weight: bold;
 }
 div.mov{
-    width: 100vw;
-    background-color: var(--backgroud_header);
+    width: 10vw;
+    background-color: var(--background_body);
     color:white;
+    margin-top: 200px;
 }
 div.mov a{
     text-decoration: none;
     color: var(--text_color);
-    font-size: 1.5rem;
+    font-size: 2.3rem;
     margin: 1rem;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 ul.cat{
     background-color: var(--background_submenu);
@@ -214,3 +216,49 @@ div.card.bg-none{
     text-align: center;
 }
 
+.rrss{
+    display: none;
+}
+.fb{
+    color:#4267B2;
+    padding-right:3px;
+}
+.ig{
+    color:#C13584;
+    padding-right:3px;
+}
+.mail{
+    color:lightblue;
+    padding-right:3px;
+}
+.logo{
+    margin:0 auto;
+}
+
+.subfooter{
+    width: 100%;
+}
+.subfooter a{
+    text-decoration: none;
+    color: var(--font-grey);
+    display: block;
+    font-size: 1.5rem;
+
+}
+.subfooter p{
+    font-size: 1.5rem;
+    color: var(--font-grey);
+}
+.footer{
+    display:block;
+}
+footer{
+    margin:3rem;
+    color:var(--text_color)
+}
+footer h2{
+    padding-left: 0;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 2rem;
+    color: var(--text_color);
+}

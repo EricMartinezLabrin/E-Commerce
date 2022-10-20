@@ -1,11 +1,11 @@
 <div class="">
-    <a href="{% url 'home' %}">Inicio</a>              
+    <a href="{% url 'home' %}" >Inicio</a>              
 </div>
 <div class="">
     <a href="{% url 'all_products' %}">Productos</a>              
 </div>
-<div class="dropdown ">
-    <a class="dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown">
+<div class="dropdown">
+    <a href="#" class="dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" data-hover="dropdown">
         Categorias
     </a>
     <ul class="dropdown-menu cat" aria-labelledby="dropdownMenuButton">
@@ -14,14 +14,7 @@
         {% endfor %}
     </ul>
 </div>
-{% comment %} <div class="">
-    <a href="{% url 'cart' %}">Carrito</a>
-</div> {% endcomment %}
+
 <div class="">
     <a href="{% url 'contact' 1 %}">Contacto</a>
 </div>
-{% comment %} <div class="menu-desktop mt-2 sub-categorie">
-    {% for categorie in categories %}
-    <a href="{% url 'categories' categorie.pk%}">{{categorie.name}}</a>
-    {% endfor %}
-</div> {% endcomment %}

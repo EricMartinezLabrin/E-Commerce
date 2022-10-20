@@ -22,7 +22,7 @@
         </div>
 
           <div class="buttons">          
-            <a href="{% url 'cart' %}"><p class="card-text"><button class="btn btn-primary">Comprar</button></p></a>
+            <a href="{% url 'add' object.id %}"><p class="card-text"><button class="btn btn-primary">Agregar al Carrito</button></p></a>
               <br>
               {% if why %}
                 <h5>¿Porque preferirnos?</h5>
@@ -44,7 +44,7 @@
     <div class="mb-3">
       <div class="row g-0">
         <div class="col-md-4">
-          <img class="small" src="/media/{{best_seller.image}}" class="img-fluid rounded-start" alt="{{best_seller.name}}">
+          <img src="/media/{{best_seller.image}}" class="img-fluid rounded-start" alt="{{best_seller.name}}">
         </div>
         <div class="col-md-8 main_background">
           <div class="detail-box card-body">

@@ -19,15 +19,6 @@
       <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
     </div>
     <div class="carousel-inner">
-      {% comment %} <div class="carousel-item active" data-bs-interval="4000">
-        <img src="/media/banner/1.png" class="d-block w-100" alt="/media/banner/1.png">
-      </div>
-      <div class="carousel-item" data-bs-interval="4000">
-        <img src="/media/banner/2.png" class="d-block w-100" alt="/media/banner/2.png">
-      </div>
-      <div class="carousel-item" data-bs-interval="4000">
-        <img src="/media/banner/3.png" class="d-block w-100" alt="/media/banner/3.png">
-      </div> {% endcomment %}
       {% for slider in banner %}
       <div class="carousel-item active" data-bs-interval="4000">
         <img src="/media/{{slider.uploadedFile}}" class="d-block w-100" alt="{{slider.name}}">

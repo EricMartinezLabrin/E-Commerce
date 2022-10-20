@@ -145,20 +145,19 @@ class DetailView(DetailView):
     
     def best_seller_data(self):
         best = GetData.get_bestseller()
-        for check in best[:0]:
-            if str(check[0]) == str(self.kwargs.get('pk')):
-                best_data = best[1:2]
-            else:
-                best_data = best[:0]
 
-        for data in best_data:
-            data_export={
-                'name':Product.objects.get(pk=data[0]).name,
-                'price':Product.objects.get(pk=data[0]).price,
-                'description':Product.objects.get(pk=data[0]).description,
-                'image':Product.objects.get(pk=data[0]).image,
-                'id':Product.objects.get(pk=data[0]).id
-            }
+        if str(best[0][0]) == str(self.kwargs.get('pk')):
+            best_data = best[1][0]
+        else:
+            best_data = best[0][0]
+        p=Product.objects.get(pk=best_data)
+        data_export={
+            'name':p.name,
+            'price':p.price,
+            'description':p.description,
+            'image':p.image,
+            'id':p.id
+        }
         return data_export    
 
     def get_context_data(self, **kwargs):
@@ -166,7 +165,7 @@ class DetailView(DetailView):
         context["categories"] = IndexView.show_category()
         context['data_settings'] = Show.settings_data()
         context['why'] = DetailView.get_why()
-        context['best_seller'] = self.best_seller_data
+        context['best_seller'] = self.best_seller_data()
         return context
 
 class CartView(TemplateView):
@@ -378,7 +377,7 @@ def OrdersView(request,pk):
     customer = User.objects.get(pk=pk)
 
     try:
-        object_list = Order.objects.filter(customer=customer)
+        object_list = Order.objects.filter(customer=customer).order_by('-id')
     except Order.DoesNotExist:
         object_list = None
 
@@ -397,8 +396,13 @@ class ContactView(DetailView):
         context['data_settings'] = Show.settings_data()
         return context 
 
-
-
+class TyCView(TemplateView):
+    template_name = "inicio/tyc.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categories"] = IndexView.show_category()
+        context['data_settings'] = Show.settings_data()
+        return context 
 
 
 
