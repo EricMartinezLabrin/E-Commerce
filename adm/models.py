@@ -9,9 +9,9 @@ class Region(models.Model):
 
 class Parcel(models.Model):
     name = models.CharField(max_length=50)
-    image = models.FileField(upload_to="parcel/")
+    image = models.FileField(upload_to="parcel/",null=True,blank=True)
     max_price = models.IntegerField(null=True,blank=True)
-    min_price = models.IntegerField(null=True, blank=True)
+    min_price = models.IntegerField(null=True,blank=True)
 
     def __str__(self):
         return self.name
