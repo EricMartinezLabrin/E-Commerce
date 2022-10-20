@@ -131,7 +131,8 @@ def SubcategoryView(request,pk):
     products = Product.objects.filter(subcategory=subcategory)
     return render(request,template_name,{
         'products':products,
-        'data_settings' : Show.settings_data,
+        'data_settings' : Show.settings_data(),
+        'categories' : IndexView.show_category(),
         'object':subcategory
     })
     
@@ -151,12 +152,13 @@ class DetailView(DetailView):
         else:
             best_data = best[0][0]
 
+        p=Product.objects.get(pk=best_data)
         data_export={
-            'name':Product.objects.get(pk=best_data[0]).name,
-            'price':Product.objects.get(pk=best_data[0]).price,
-            'description':Product.objects.get(pk=best_data[0]).description,
-            'image':Product.objects.get(pk=best_data[0]).image,
-            'id':Product.objects.get(pk=best_data[0]).id
+            'name':p.name,
+            'price':p.price,
+            'description':p.description,
+            'image':p.image,
+            'id':p.id
         }
         return data_export    
 
@@ -165,7 +167,7 @@ class DetailView(DetailView):
         context["categories"] = IndexView.show_category()
         context['data_settings'] = Show.settings_data()
         context['why'] = DetailView.get_why()
-        context['best_seller'] = self.best_seller_data
+        context['best_seller'] = self.best_seller_data()
         return context
 
 class CartView(TemplateView):
