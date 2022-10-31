@@ -146,8 +146,17 @@ class DetailView(DetailView):
     
     def best_seller_data(self):
         best = GetData.get_bestseller()
-
-        if str(best[0][0]) == str(self.kwargs.get('pk')):
+         
+        if len(best) == 0:
+            d = Product.objects.all()
+            best=[]
+            for q in d:
+                best.append(q.id)
+            if str(best[0]) == str(self.kwargs.get('pk')):
+                 best_data = best[1]
+            else:
+                 best_data = best[0]
+        elif str(best[0][0]) == str(self.kwargs.get('pk')):
             best_data = best[1][0]
         else:
             best_data = best[0][0]

@@ -48,7 +48,8 @@
 <main class="form-signout w-100 m-auto">
   <form method="POST">
     {% csrf_token %}
-    <img class="mb-4" src="{% static 'inicio/Images/logo.png' %}" alt="" width="172" height="157">
+    <a href="{% url 'home' %}"><img class="mb-4" src="/media/settings/logo.png" alt="" width="172" height="157"></a>
+    
     <h1 class="h3 mb-3 fw-normal white">Registrarse</h1>
 
     <div class="form-floating">
@@ -79,6 +80,7 @@
     </div>
 
     <button class="w-100 btn btn-lg btn-primary" type="submit">Registrarme</button>
+    <a href="{% url 'home' %}" class="btn btn-lg light w-100 mt-2" style="color:white!important, border-color:orange!important">Volver al Incio</a>
     <p class="mt-5 mb-3 text-muted white">&copy; 2022</p>
   </form>
 </main>
@@ -93,3 +95,4 @@
 </script>
   </body>
 </html>
+
