@@ -409,7 +409,7 @@ class SubCategoryDeleteView(UserAccessMixin,DeleteView):
 class ProductView(UserAccessMixin,ListView):
     model = Product
     template_name = "adm/product.html"
-    paginate_by = 20
+    paginate_by = 7
     permission_required = 'is_staff'
 
     def get_context_data(self, **kwargs):
