@@ -31,7 +31,7 @@ SECRET_KEY = 'django-insecure-@4m^@25gg)$(yy-b*^@-j=p*jm&n7s3q96)%vtn#6r=)7#06*v
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True 
 
-ALLOWED_HOSTS = ['ikigaimanga.cl','51.222.193.248','descargas.tk','ikigaimanga.tk']
+ALLOWED_HOSTS = ['127.0.0.1','ikigaimanga.cl','51.222.193.248','descargas.tk','ikigaimanga.tk']
 
 
 # Application definition

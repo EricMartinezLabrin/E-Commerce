@@ -429,35 +429,49 @@ class CreateProductView(UserAccessMixin,CreateView):
         context['data_settings'] = Show.settings_data()
         return context
 
-def UpdateProduct(request,pk):
-    product = Product.objects.get(pk=pk)
-    form = AddProduct(request.POST or None, request.FILES or None, instance=product)
-    if request.method == "POST":
-        if form.is_valid():
-            # Fetching the form data
-            name = form.cleaned_data["name"]
-            category = form.cleaned_data["category"]
-            subcategory = form.cleaned_data["subcategory"]
-            price = form.cleaned_data["price"]
-            description = form.cleaned_data["description"]
-            image = form.cleaned_data["image"]
+# def UpdateProduct(request,pk):
+#     product = Product.objects.get(pk=pk)
+#     form = AddProduct(request.POST or None, request.FILES or None, instance=product)
+#     if request.method == "POST":
+#         if form.is_valid():
+#             # Fetching the form data
+#             name = form.cleaned_data["name"]
+#             category = form.cleaned_data["category"]
+#             subcategory = form.cleaned_data["subcategory"]
+#             price = form.cleaned_data["price"]
+#             description = form.cleaned_data["description"]
+#             image = form.cleaned_data["image"]
 
-            # Saving the information in the database
-            Product.objects.filter(pk=pk).update(
-                name = name,
-                category = category,
-                subcategory = subcategory,
-                price = price,
-                description = description,
-                image = image
-            )
+#             # Saving the information in the database
+#             Product.objects.filter(pk=pk).update(
+#                 name = name,
+#                 category = category,
+#                 subcategory = subcategory,
+#                 price = price,
+#                 description = description,
+#                 image = image
+#             )
             
-            return HttpResponseRedirect(reverse_lazy("adm:products"))
-    else:
-        return render(request,"adm/product_update.html",{
-            'form': form,
-            'data_settings' : Show.settings_data
-        })
+#             return HttpResponseRedirect(reverse_lazy("adm:products"))
+#     else:
+#         return render(request,"adm/product_update.html",{
+#             'form': form,
+#             'data_settings' : Show.settings_data
+#         })
+
+class UpdateProduct(UserAccessMixin, UpdateView):
+    permission_required = 'is_staff'
+    template_name= "adm/product_update.html"
+    success_url = reverse_lazy("adm:products")
+    model = Product
+    form_class = AddProduct
+
+class ProductDelete(UserAccessMixin, DeleteView):
+    permission_required = 'is_staff'
+    template_name= "adm/users_delete.html"
+    success_url = reverse_lazy("adm:products")
+    model = Product
+
 
 class OrdersView(UserAccessMixin,ListView):
     model = Order
